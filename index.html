@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith Route Advanced Tracking & Compliance</title>
+    <title>Zenith Route Advanced Tracking & Compliance (Perfected)</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Lucide Icons for better visuals -->
@@ -17,10 +17,9 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        // Zenith Route High-Tech Corporate Colors
                         'primary': '#1E3A8A', // Deep Navy Blue
                         'accent': '#38BDF8', // Bright Cyan/Sky Blue
-                        'secondary': '#E0F2F7', // Very light blue-gray
+                        'secondary': '#E0F2F7', 
                         'success': '#10B981',
                         'info': '#3B82F6',
                         'warning': '#F59E0B',
@@ -30,6 +29,9 @@
                         'status-transit': '#3B82F6',
                         'status-exception': '#EF4444',
                         'status-cleared': '#1E3A8A',
+                        'status-inspection': '#F97316', // Orange for Inspection
+                        'paystack': '#1E9F6E',
+                        'zenith-dark': '#0F172A'
                     }
                 }
             }
@@ -38,14 +40,12 @@
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Custom body background: Subtle gradient on a light canvas */
         body {
             background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
         }
         
-        /* Timeline Styling */
         .timeline-line {
-            width: 4px; /* Thicker line for visual weight */
+            width: 4px; 
             background-color: #E5E7EB; 
             position: absolute;
             left: 17px; 
@@ -53,19 +53,17 @@
             bottom: 0;
         }
 
-        /* Card Hover and Shadow Effect */
         .tracking-result, .input-card {
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 10px 20px -5px rgba(30, 58, 138, 0.15);
         }
         .tracking-result:hover, .input-card:hover {
-            box-shadow: 0 25px 50px -12px rgba(30, 58, 138, 0.3); /* Intense shadow on hover */
+            box-shadow: 0 25px 50px -12px rgba(30, 58, 138, 0.3); 
             transform: translateY(-4px);
         }
 
-        /* Map Placeholder Style - Dark and professional */
         .map-placeholder {
-            background: #252e47; /* Dark background for professional map look */
+            background: #252e47; 
             background-image: radial-gradient(#394a6a 1px, transparent 0);
             background-size: 25px 25px;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7);
@@ -74,7 +72,7 @@
             border: 2px solid #38BDF8;
         }
 
-        /* Custom animation for map pin */
+        /* Keyframe for map pin pulse */
         @keyframes pulse-pin {
             0% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.3); opacity: 0.7; }
@@ -84,12 +82,7 @@
             animation: pulse-pin 2s infinite ease-in-out;
         }
 
-        /* Modal Backdrop */
-        .modal-backdrop {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-        
-        /* Loading Animation */
+        /* Keyframe for fast spinner (payment processing) */
         @keyframes rotating {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -97,37 +90,92 @@
         .animate-spin-fast {
             animation: rotating 0.8s linear infinite;
         }
+
+        /* Keyframe for subtle slide-in/fade-up effect for content loading */
+        @keyframes slide-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-slide-in {
+            animation: slide-in-up 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+        }
+        
+        /* Modal Backdrop */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Print-specific styles to hide non-document elements when printing */
+        @media print {
+            /* Hide UI elements not part of the document (buttons, menus, header) */
+            header, main > .input-card, #notificationContainer, .print-hide, .modal-backdrop {
+                display: none !important;
+            }
+            /* Make the printable content fill the page */
+            #printDocumentModal {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: auto;
+                margin: 0;
+                padding: 0;
+                display: block !important;
+                z-index: 1000;
+            }
+            /* Remove shadows/borders for cleaner print output */
+            .printable-document {
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+                min-height: 100vh;
+            }
+        }
     </style>
 </head>
 <body class="font-sans min-h-screen">
 
-    <header class="bg-primary text-white shadow-2xl">
+    <header class="bg-primary text-white shadow-2xl print-hide">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
             <h1 class="text-4xl font-black tracking-wider flex items-center">
                 <i data-lucide="route" class="h-8 w-8 mr-3 text-accent"></i> ZENITH ROUTE 
                 <span class="text-accent text-lg font-semibold ml-3 hidden sm:inline-block">ADVANCED LOGISTICS & COMPLIANCE</span>
             </h1>
             <div class="hidden sm:block">
-                <a href="#" class="text-secondary hover:text-accent px-4 py-2 rounded-lg text-lg font-medium transition duration-300">Support Center</a>
+                <p class="text-secondary/70 text-sm">System Status: <span class="text-success font-bold">Operational</span></p>
             </div>
         </div>
     </header>
 
+    <!-- Notification Area -->
+    <div id="notificationContainer" class="fixed top-6 right-6 z-[60] space-y-3 print-hide">
+        <!-- Notifications will be appended here -->
+    </div>
+
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <!-- Tracking Input Card -->
-        <div class="input-card bg-white p-6 sm:p-12 rounded-3xl mb-16 border-t-4 border-accent">
+        <div class="input-card bg-white p-6 sm:p-12 rounded-3xl mb-16 border-t-4 border-accent print-hide">
             <h2 class="text-4xl font-black text-primary mb-3">Global Consignment Visibility</h2>
-            <p class="text-gray-600 mb-8 text-xl">Enter your secure Consignment ID to access real-time status and manage critical regulatory clearance procedures.</p>
+            <p class="text-gray-600 mb-8 text-xl">Enter your secure Consignment ID to access real-time status and manage critical regulatory clearance. (Try **ZRC33334** or **XPR5551**)</p>
 
             <div class="flex flex-col sm:flex-row gap-5">
                 <input
                     type="text"
                     id="trackingInput"
-                    placeholder="Enter Consignment ID (e.g., ZEN123456789 or ZRC33334)"
+                    placeholder="Enter Consignment ID (e.g., ZRC33334)"
                     class="flex-grow p-5 border-2 border-gray-300 rounded-xl focus:ring-accent focus:border-accent text-xl transition duration-200 ease-in-out shadow-lg placeholder-gray-400"
                 >
                 <button
-                    onclick="trackShipment()"
+                    id="trackButton"
+                    onclick="ZenithApp.trackShipment()"
                     class="w-full sm:w-64 px-8 py-5 bg-primary text-white font-extrabold rounded-xl shadow-2xl hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-accent/50 transition duration-300 text-xl transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center"
                 >
                     <i data-lucide="radar" class="h-6 w-6 mr-2"></i> Initiate Search
@@ -135,9 +183,9 @@
             </div>
         </div>
 
-        <!-- Results Display Area -->
+        <!-- Results Display Area / Loading Indicator -->
         <div id="resultsContainer">
-            <div id="initialMessage" class="text-center p-20 bg-white rounded-3xl shadow-xl border-2 border-dashed border-accent/50 transform scale-[0.98] opacity-90 transition duration-500">
+            <div id="initialMessage" class="text-center p-20 bg-white rounded-3xl shadow-xl border-2 border-dashed border-accent/50 transform scale-[0.98] opacity-90 transition duration-500 animate-slide-in">
                 <i data-lucide="package-search" class="mx-auto h-24 w-24 text-accent mb-4"></i>
                 <h3 class="mt-4 text-4xl font-bold text-gray-900">Awaiting Consignment Input</h3>
                 <p class="mt-2 text-xl text-gray-500">Your route to seamless global trade management starts with a valid tracking ID.</p>
@@ -145,11 +193,11 @@
         </div>
     </main>
 
-    <!-- Customs Clearance Payment Modal -->
-    <div id="clearanceModal" class="fixed inset-0 hidden z-50 overflow-y-auto modal-backdrop" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <!-- 1. Customs Clearance Parent Modal (Regulatory Hold) -->
+    <div id="clearanceModal" class="fixed inset-0 hidden z-50 overflow-y-auto modal-backdrop print-hide" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-center justify-center min-h-screen p-4 text-center sm:p-0">
             <!-- Modal panel -->
-            <div class="relative bg-white rounded-3xl text-left overflow-hidden shadow-4xl transform transition-all sm:my-8 sm:max-w-2xl sm:w-full border-t-8 border-warning">
+            <div class="relative bg-white rounded-3xl text-left overflow-hidden shadow-4xl transform transition-all sm:my-8 sm:max-w-4xl sm:w-full border-t-8 border-warning">
                 <div class="bg-white p-8 sm:p-10">
                     <div class="sm:flex sm:items-start">
                         <div class="mx-auto flex-shrink-0 flex items-center justify-center h-16 w-16 rounded-full bg-warning/10 sm:mx-0 sm:h-14 sm:w-14">
@@ -162,19 +210,17 @@
                             <p id="modal-tracking-number" class="text-lg text-gray-500 mt-2 font-medium"></p>
                             <p class="text-sm text-danger mt-1">Status: Consignment is on Regulatory Hold. Immediate action required for release.</p>
                             
+                            <div id="modal-details-container" class="mt-6"></div>
+
                             <div class="mt-8">
-                                <div id="modal-cost-info" class="p-5 bg-secondary rounded-xl font-black text-2xl text-primary text-center mb-6 shadow-inner"></div>
-                                
-                                <h4 class="text-xl font-bold text-gray-700 mb-4 border-b-2 pb-2 border-accent/50">Mandatory Release Protocols:</h4>
-                                <div id="modal-actions-container" class="space-y-6">
-                                    <!-- Dynamic action buttons will be injected here -->
-                                </div>
+                                <h4 class="text-2xl font-black text-primary mb-5 border-b-2 pb-2 border-accent/50">Mandatory Release Protocols</h4>
+                                <div id="modal-actions-container" class="space-y-6"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="bg-gray-50 px-6 py-5 sm:flex sm:flex-row-reverse rounded-b-3xl">
-                    <button type="button" onclick="closeClearanceModal()" class="w-full inline-flex justify-center rounded-xl border-2 border-gray-300 shadow-md px-6 py-3 bg-white text-lg font-semibold text-gray-700 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto transition duration-200">
+                    <button type="button" onclick="ZenithApp.closeClearanceModal()" class="w-full inline-flex justify-center rounded-xl border-2 border-gray-300 shadow-md px-6 py-3 bg-white text-lg font-semibold text-gray-700 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto transition duration-200">
                         Close Portal
                     </button>
                 </div>
@@ -182,9 +228,90 @@
         </div>
     </div>
 
+    <!-- 2. Paystack Simulation Modal (Child Modal) -->
+    <div id="paystackSimulationModal" class="fixed inset-0 hidden z-50 overflow-y-auto modal-backdrop print-hide" aria-labelledby="paystack-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen p-4 text-center sm:p-0">
+            <!-- Modal panel -->
+            <div class="relative bg-white rounded-3xl text-left overflow-hidden shadow-4xl transform transition-all sm:my-8 sm:max-w-xl sm:w-full border-t-8 border-paystack">
+                <div class="bg-white p-8 sm:p-10">
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="flex items-center justify-center h-16 w-full mb-6 border-b-2 pb-4">
+                            <i data-lucide="credit-card" class="h-8 w-8 text-paystack mr-3"></i>
+                            <h3 class="text-3xl font-extrabold text-gray-900">Paystack Payment Gateway</h3>
+                        </div>
+                        
+                        <p class="text-gray-500 mb-2 font-medium">Payment for Consignment ID: <span id="paystackModalTrackingNumber" class="text-primary font-bold"></span></p>
+                        <p class="text-4xl font-black text-paystack mb-6">
+                            Amount Due: <span id="paystackModalAmount"></span>
+                        </p>
+
+                        <div class="bg-gray-100 p-4 rounded-xl w-full mb-8 text-center">
+                            <p class="text-sm font-semibold text-gray-700">Test Key in Use:</p>
+                            <code class="text-xs text-primary break-all" id="paystackTestKeyDisplay"></code>
+                        </div>
+
+                        <!-- Payment Form Simulation -->
+                        <div class="w-full space-y-4">
+                            <!-- Input fields remain static for simulation purposes -->
+                            <input type="text" placeholder="Card Number (4012 xxxx xxxx xxxx)" class="w-full p-3 border border-gray-300 rounded-lg">
+                            <div class="flex space-x-4">
+                                <input type="text" placeholder="MM/YY" class="w-1/2 p-3 border border-gray-300 rounded-lg">
+                                <input type="text" placeholder="CVV" class="w-1/2 p-3 border border-gray-300 rounded-lg">
+                            </div>
+                            <input type="email" placeholder="Email Address" class="w-full p-3 border border-gray-300 rounded-lg">
+                        </div>
+                        
+                        <div class="mt-10 w-full space-y-3">
+                            <!-- Simulate Success Button -->
+                            <button 
+                                onclick="ZenithApp.handlePaystackCallback(document.getElementById('paystackModalTrackingNumber').textContent, 'success')"
+                                class="w-full px-6 py-4 bg-paystack text-white font-extrabold rounded-xl shadow-lg hover:bg-paystack/90 transition duration-200 flex items-center justify-center"
+                            >
+                                <i data-lucide="zap" class="h-5 w-5 mr-3"></i> Simulate Successful Payment
+                            </button>
+                            <!-- Simulate Failure Button -->
+                            <button 
+                                onclick="ZenithApp.handlePaystackCallback(document.getElementById('paystackModalTrackingNumber').textContent, 'failure')"
+                                class="w-full px-6 py-4 bg-danger/80 text-white font-extrabold rounded-xl shadow-lg hover:bg-danger transition duration-200 flex items-center justify-center"
+                            >
+                                <i data-lucide="x" class="h-5 w-5 mr-3"></i> Simulate Failed Payment/Cancel
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-4 text-center rounded-b-3xl">
+                    <p class="text-xs text-gray-500">Secured by Paystack</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 3. Printable Document Modal (Simulates PDF Generation) -->
+    <div id="printDocumentModal" class="fixed inset-0 hidden z-50 overflow-y-auto modal-backdrop" aria-labelledby="print-title" role="dialog" aria-modal="true">
+        <div class="flex items-start justify-center min-h-screen p-4 sm:p-0">
+            <!-- Modal panel -->
+            <div class="relative bg-white rounded-3xl text-left overflow-hidden shadow-4xl transform transition-all sm:my-8 sm:max-w-4xl sm:w-full border-t-8 border-primary printable-document">
+                <div class="bg-white p-8 sm:p-10" id="printableContent">
+                    <!-- Dynamic Document Content Renders Here -->
+                </div>
+                <div class="bg-gray-50 px-6 py-5 sm:flex sm:flex-row-reverse rounded-b-3xl print-hide">
+                    <button type="button" onclick="window.print()" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-md px-6 py-3 bg-success text-lg font-semibold text-white hover:bg-success/90 sm:mt-0 sm:ml-3 sm:w-auto transition duration-200">
+                        <i data-lucide="printer" class="h-6 w-6 mr-2"></i> Print Document (Save as PDF)
+                    </button>
+                    <button type="button" onclick="ZenithApp.closePrintDocumentModal()" class="w-full inline-flex justify-center rounded-xl border-2 border-gray-300 shadow-md px-6 py-3 bg-white text-lg font-semibold text-gray-700 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto transition duration-200">
+                        Close Document Viewer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
-        // --- FIREBASE PLACEHOLDERS (Required for environment, even if not used) ---
-        const __app_id = 'zenith-route-v5';
+        // --- FIREBASE PLACEHOLDERS (Required for environment) ---
+        // Note: Firestore is not utilized for this single-file app, but variables are kept for compliance.
+        const __app_id = 'zenith-route-v6';
         const __firebase_config = '{}';
         const __initial_auth_token = 'mock-auth-token';
 
@@ -192,9 +319,9 @@
         const TEST_PAYMENT_KEY = 'pk_test_cdbf17939cecdf30d94efbaad720a7e4fe2564ed';
 
 
-        // --- MOCK DATABASE (Updated with professional data and volumetric weight) ---
+        // --- MOCK DATABASE ---
         let MOCK_SHIPMENTS = [
-            // In Transit - Clear
+            // 1. In Transit - Clear
             {
                 trackingNumber: 'ZEN123456789',
                 status: 'In Transit',
@@ -204,41 +331,23 @@
                 origin: 'Shenzhen, China',
                 destination: 'New York, USA',
                 estimatedDelivery: '2025-11-05',
-                service: 'Premium Air Express',
-                weight: '2.5 kg',
-                volumetricWeight: '4.8 kg',
                 currentGeo: { lat: 35.15, lng: -90.0, location: 'Memphis, TN' }, 
                 isClearanceNeeded: false,
-                customsInfo: { cost: 0, documentsRequired: false, isPaid: true, isDocumentsSubmitted: true },
-                receivedBy: null,
+                customsInfo: { cost: 0, documentsRequired: false, isPaid: true, isDocumentsSubmitted: true, reasoning: null, lineItems: [] },
+                consigneeDetails: {
+                    fullName: 'Alice Johnson',
+                    address: '789 Central Ave, Apt 4B',
+                    cityStateZip: 'New York, NY 10007',
+                    country: 'USA',
+                    phone: '+1 (212) 555-0101',
+                    email: 'alice.j@corp.com'
+                },
                 history: [
                     { date: '10/29', time: '09:30 AM', location: 'Memphis, TN', description: 'Arrived at Regional Sortation Hub. Processing in progress.' },
                     { date: '10/28', time: '11:00 PM', location: 'Anchorage, AK', description: 'Departed Transit Air Freight Terminal.' },
                 ]
             },
-            // Delivered - Awaiting Recipient Confirmation
-            {
-                trackingNumber: 'ZRC987654321',
-                status: 'Delivered',
-                statusKey: 'status-delivered',
-                senderName: 'Bookworm Publishers (LDN)',
-                receiverName: 'Robert Smith (CHI)',
-                origin: 'London, UK',
-                destination: 'Chicago, USA',
-                estimatedDelivery: '2025-10-20',
-                service: 'Standard Ground Freight',
-                weight: '15.0 kg',
-                volumetricWeight: '12.0 kg',
-                currentGeo: { lat: 41.87, lng: -87.62, location: 'Chicago, IL' },
-                isClearanceNeeded: false,
-                customsInfo: { cost: 0, documentsRequired: false, isPaid: true, isDocumentsSubmitted: true },
-                receivedBy: null, 
-                history: [
-                    { date: '10/20', time: '02:15 PM', location: 'Chicago, IL', description: 'Delivery confirmed and finalized by courier.' },
-                    { date: '10/20', time: '08:00 AM', location: 'Chicago, IL', description: 'Outbound for final mile delivery attempt.' },
-                ]
-            },
-            // Awaiting Clearance - NEEDS PAYMENT & DOCUMENTS
+            // 2. Requires BOTH Payment & Docs (High Value - ZRC33334)
             {
                 trackingNumber: 'ZRC33334',
                 status: 'Awaiting Clearance',
@@ -248,493 +357,716 @@
                 origin: 'Tokyo, Japan',
                 destination: 'Los Angeles, USA',
                 estimatedDelivery: '2025-11-03',
-                service: 'Ocean Cargo Express',
-                weight: '150.0 kg',
-                volumetricWeight: '210.5 kg',
                 currentGeo: { lat: 33.7, lng: -118.2, location: 'Port of Los Angeles, CA' },
                 isClearanceNeeded: true, 
-                customsInfo: { cost: 250.75, documentsRequired: true, isPaid: false, isDocumentsSubmitted: false },
-                receivedBy: null,
+                customsInfo: { 
+                    cost: 350.00, 
+                    documentsRequired: true, 
+                    isPaid: false, 
+                    isDocumentsSubmitted: false,
+                    reasoning: "High-value commercial goods (HS Code 8501) requiring full duty settlement and specific country-of-origin documentation (Form A). Both payment and supporting documentation are required prior to vessel offloading.",
+                    lineItems: [
+                        { description: "Import Duty (15% of declared value)", basis: "$2,000.00", fee: 300.00 },
+                        { description: "Regulatory Handling Fee (Fixed)", basis: "Per Consignment", fee: 25.00 },
+                        { description: "VAT/Sales Tax (2.5%)", basis: "$1,000.00 (Taxable Base)", fee: 25.00 }
+                    ]
+                },
+                consigneeDetails: {
+                    fullName: 'Zenith Logistics HQ',
+                    address: '1000 Ocean View Blvd, Suite 200',
+                    cityStateZip: 'Los Angeles, CA 90020',
+                    country: 'USA',
+                    phone: '+1 (310) 555-8888',
+                    email: 'customs@zenithroute.com'
+                },
                 history: [
                     { date: '10/29', time: '07:00 AM', location: 'LA Port Authority', description: 'Consignment docked. Regulatory payment and documentation submission required for immediate release.' },
-                    { date: '10/20', time: '11:00 PM', location: 'Tokyo Port', description: 'Shipment loaded onto vessel, departed origin port.' },
+                ]
+            },
+            // 3. Partially Cleared - Docs Submitted, Awaiting Payment (XPR5551)
+            {
+                trackingNumber: 'XPR5551',
+                status: 'Awaiting Payment',
+                statusKey: 'status-pending',
+                senderName: 'Artisan Goods EU (BER)',
+                receiverName: 'Sarah K. (MIA)',
+                origin: 'Berlin, Germany',
+                destination: 'Miami, USA',
+                estimatedDelivery: '2025-11-09',
+                currentGeo: { lat: 25.76, lng: -80.19, location: 'Miami International Airport, FL' },
+                isClearanceNeeded: true, 
+                customsInfo: { 
+                    cost: 45.50, 
+                    documentsRequired: true, 
+                    isPaid: false, 
+                    isDocumentsSubmitted: true, 
+                    reasoning: "Low-value shipment below threshold for full documentation review. All documents pre-filed and approved. Only residual import taxes and airport handling fees are outstanding.",
+                    lineItems: [
+                        { description: "Import Tax (5%)", basis: "$400.00", fee: 20.00 },
+                        { description: "Airport Handling Fee (Fixed)", basis: "Per Piece", fee: 15.00 },
+                        { description: "Security Surcharge", basis: "Fixed", fee: 10.50 }
+                    ]
+                },
+                consigneeDetails: {
+                    fullName: 'Sarah Kahlua',
+                    address: '800 Brickell Bay Dr, Apt 12A',
+                    cityStateZip: 'Miami, FL 33131',
+                    country: 'USA',
+                    phone: '+1 (305) 555-4444',
+                    email: 'sarah.k@personal.net'
+                },
+                history: [
+                    { date: '10/30', time: '04:00 PM', location: 'MIA Cargo Terminal', description: 'Regulatory Hold: Payment pending. Documentation pre-approved.' },
                 ]
             }
         ];
 
-        const resultsContainer = document.getElementById('resultsContainer');
-        const clearanceModal = document.getElementById('clearanceModal');
+        // --- CORE APPLICATION LOGIC (ZenithApp Object) ---
 
-        /**
-         * Converts the status key into Tailwind classes for styling.
-         */
-        function getStatusClasses(statusKey) {
-            switch (statusKey) {
-                case 'status-delivered':
-                    return 'bg-success text-white';
-                case 'status-transit':
-                    return 'bg-info text-white';
-                case 'status-exception':
-                    return 'bg-danger text-white';
-                case 'status-pending':
-                    return 'bg-warning text-gray-800';
-                default: 
-                    return 'bg-status-cleared text-white';
-            }
-        }
-
-        /**
-         * Utility to display a temporary notification message.
-         */
-        function displayTemporaryMessage(title, message, color = 'success') {
-            const successBox = document.createElement('div');
-            successBox.className = `fixed top-6 right-6 p-5 rounded-xl shadow-2xl text-white bg-${color} z-50 transform transition duration-500 ease-out translate-x-0 opacity-100`;
-            successBox.innerHTML = `<p class="font-bold text-lg">${title}</p><p class="text-sm">${message}</p>`;
-            document.body.appendChild(successBox);
-
-            setTimeout(() => {
-                successBox.classList.add('translate-x-full', 'opacity-0');
-                setTimeout(() => successBox.remove(), 500);
-            }, 5000);
-        }
-
-        /**
-         * Recipient action: Marks a delivered shipment as received.
-         */
-        function confirmReceipt(trackingNumber) {
-            const shipmentIndex = MOCK_SHIPMENTS.findIndex(s => s.trackingNumber === trackingNumber);
-            if (shipmentIndex > -1) {
-                MOCK_SHIPMENTS[shipmentIndex].receivedBy = "Recipient Confirmed";
-                const shipment = MOCK_SHIPMENTS[shipmentIndex];
-                resultsContainer.innerHTML = renderShipmentResult(shipment);
-                lucide.createIcons();
-                displayTemporaryMessage("Confirmation Registered", `Consignment ${trackingNumber} receipt confirmed by receiver. Record finalized.`);
-            }
-        }
-        
-        // --- CUSTOMS CLEARANCE FUNCTIONS ---
-
-        /**
-         * Opens the detailed Customs Clearance Modal.
-         */
-        function openClearanceModal(trackingNumber) {
-            const shipment = MOCK_SHIPMENTS.find(s => s.trackingNumber === trackingNumber);
-            if (!shipment || !shipment.isClearanceNeeded) return;
-
-            document.getElementById('modal-tracking-number').textContent = `Consignment ID: ${trackingNumber}`;
+        const ZenithApp = {
             
-            const costText = shipment.customsInfo.isPaid 
-                ? 'COMPLIANCE STATUS: DUTIES AND TAXES SETTLED'
-                : `TOTAL REGULATORY FEES DUE: $${shipment.customsInfo.cost.toFixed(2)}`;
-            document.getElementById('modal-cost-info').innerHTML = costText;
+            // --- UI/UX Utilities ---
+            resultsContainer: document.getElementById('resultsContainer'),
 
-            renderClearanceActions(shipment);
-            clearanceModal.classList.remove('hidden');
-        }
-
-        /**
-         * Closes the Customs Clearance Modal.
-         */
-        function closeClearanceModal() {
-            clearanceModal.classList.add('hidden');
-        }
-
-        /**
-         * Renders the action buttons inside the clearance modal based on current status.
-         */
-        function renderClearanceActions(shipment) {
-            const actionsContainer = document.getElementById('modal-actions-container');
-            let html = '';
-
-            // 1. Document Submission Step
-            if (shipment.customsInfo.documentsRequired && !shipment.customsInfo.isDocumentsSubmitted) {
-                html += `
-                    <div class="flex items-center p-4 border rounded-xl shadow-sm bg-accent/10">
-                        <i data-lucide="upload-cloud" class="h-6 w-6 text-primary mr-4 flex-shrink-0"></i>
-                        <div class="flex-grow">
-                            <p class="font-medium text-gray-700">Submit Required Trade Documentation</p>
-                            <p class="text-xs text-gray-500">Commercial Invoice, KYC/ID Verification</p>
-                        </div>
-                        <button onclick="simulateClearanceAction('${shipment.trackingNumber}', 'documents')" class="ml-4 px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/80 transition">
-                            Submit Documents
-                        </button>
-                    </div>
-                `;
-            } else if (shipment.customsInfo.documentsRequired) {
-                 html += `
-                    <div class="flex items-center p-4 border border-success/50 bg-green-50 rounded-xl shadow-inner">
-                        <i data-lucide="check-circle" class="h-6 w-6 text-success mr-4 flex-shrink-0"></i>
-                        <p class="flex-grow font-medium text-success">Documentation Verified and Approved</p>
-                    </div>
-                `;
-            }
-
-            // 2. Payment Step - Now with a loading state simulation
-            if (!shipment.customsInfo.isPaid) {
-                html += `
-                    <div class="flex items-center p-4 border rounded-xl shadow-sm bg-warning/10">
-                        <i data-lucide="credit-card" class="h-6 w-6 text-warning mr-4 flex-shrink-0"></i>
-                        <div class="flex-grow">
-                            <p class="font-medium text-gray-700">Settle Regulatory Duties and Taxes</p>
-                            <p class="text-xs text-gray-500">Payment Gateway: Zenith Secure (Key: ${TEST_PAYMENT_KEY.substring(0, 10)}...)</p>
-                        </div>
-                        <button id="payButton_${shipment.trackingNumber}" onclick="simulateClearanceAction('${shipment.trackingNumber}', 'payment')" class="ml-4 px-4 py-2 bg-warning text-white text-sm font-semibold rounded-lg shadow-lg hover:bg-warning/90 transition">
-                            Pay $${shipment.customsInfo.cost.toFixed(2)}
-                        </button>
-                    </div>
-                `;
-            } else {
-                html += `
-                    <div class="flex items-center p-4 border border-success/50 bg-green-50 rounded-xl shadow-inner">
-                        <i data-lucide="check-circle" class="h-6 w-6 text-success mr-4 flex-shrink-0"></i>
-                        <p class="flex-grow font-medium text-success">Financial Obligations Fulfilled</p>
-                    </div>
-                `;
-            }
-
-            actionsContainer.innerHTML = html;
-            lucide.createIcons();
-        }
-
-        /**
-         * Simulates a single action (payment or document submission) and checks for final clearance.
-         */
-        function simulateClearanceAction(trackingNumber, actionType) {
-            const shipmentIndex = MOCK_SHIPMENTS.findIndex(s => s.trackingNumber === trackingNumber);
-            if (shipmentIndex === -1) return;
-
-            let shipment = MOCK_SHIPMENTS[shipmentIndex];
-            const payButton = document.getElementById(`payButton_${trackingNumber}`);
-
-            if (actionType === 'payment') {
-                if(payButton) {
-                    payButton.innerHTML = `<i data-lucide="loader-circle" class="h-5 w-5 animate-spin-fast"></i> Processing...`;
-                    payButton.disabled = true;
-                    
-                    // Simulate payment processing delay
-                    setTimeout(() => {
-                        shipment.customsInfo.isPaid = true;
-                        displayTemporaryMessage("Payment Successful", `Transaction approved via Zenith Secure Gateway. Key: ${TEST_PAYMENT_KEY.substring(0, 10)}...`, 'info');
-                        
-                        // Check for final clearance after simulated payment
-                        checkAndFinalizeClearance(shipment, trackingNumber);
-
-                    }, 2500); // 2.5 second delay for realism
+            /**
+             * Converts the status key into Tailwind classes for styling.
+             */
+            getStatusClasses(statusKey) {
+                switch (statusKey) {
+                    case 'status-delivered': return 'bg-success text-white';
+                    case 'status-transit': return 'bg-info text-white';
+                    case 'status-exception': return 'bg-danger text-white';
+                    case 'status-pending': return 'bg-warning text-gray-800';
+                    case 'status-inspection': return 'bg-status-inspection text-white';
+                    case 'status-cleared': return 'bg-status-cleared text-white';
+                    default: return 'bg-gray-500 text-white';
                 }
+            },
 
-            } else if (actionType === 'documents') {
-                shipment.customsInfo.isDocumentsSubmitted = true;
-                displayTemporaryMessage("Documentation Submitted", `Trade documents received and queued for customs validation.`, 'info');
-                
-                // Check for final clearance immediately after document submission (assuming instant validation for mock)
-                checkAndFinalizeClearance(shipment, trackingNumber);
-            }
-        }
+            /**
+             * Displays a temporary, professional notification.
+             */
+            showNotification(title, message, type = 'info') {
+                const container = document.getElementById('notificationContainer');
+                const colorMap = {
+                    success: 'bg-success', danger: 'bg-danger', info: 'bg-info', warning: 'bg-warning'
+                };
+                const iconMap = {
+                    success: 'check-circle', danger: 'x-octagon', info: 'bell', warning: 'alert-triangle'
+                };
 
-        /**
-         * Checks if all clearance conditions are met and finalizes the shipment status.
-         */
-        function checkAndFinalizeClearance(shipment, trackingNumber) {
-            // Re-render modal to update statuses
-            renderClearanceActions(shipment);
-            
-            if (shipment.customsInfo.isPaid && (!shipment.customsInfo.documentsRequired || shipment.customsInfo.isDocumentsSubmitted)) {
+                const notification = document.createElement('div');
+                notification.className = `p-4 rounded-xl shadow-2xl text-white ${colorMap[type]} transform transition duration-500 ease-out translate-x-0 opacity-100 max-w-sm`;
+                notification.innerHTML = `
+                    <div class="flex items-start">
+                        <i data-lucide="${iconMap[type]}" class="h-5 w-5 mr-3 mt-1 flex-shrink-0"></i>
+                        <div>
+                            <p class="font-bold text-lg">${title}</p>
+                            <p class="text-sm">${message}</p>
+                        </div>
+                    </div>
+                `;
                 
-                // Update final clearance status
-                shipment.isClearanceNeeded = false;
-                shipment.status = "Cleared, En Route to Destination";
-                shipment.statusKey = "status-cleared";
-                
-                // Add a new event to the history
-                const date = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
-                const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-                shipment.history.unshift({
-                    date: date,
-                    time: time,
-                    location: shipment.currentGeo.location,
-                    description: 'Customs Clearance Complete! Shipment released and routed for final delivery scheduling.'
-                });
+                container.appendChild(notification);
+                lucide.createIcons();
 
-                // Close modal and re-render the main tracking page
+                // Auto-remove notification
                 setTimeout(() => {
-                    closeClearanceModal();
-                    resultsContainer.innerHTML = renderShipmentResult(shipment);
-                    lucide.createIcons();
-                    displayTemporaryMessage("Regulatory Release Granted", `Consignment ${trackingNumber} has been officially cleared and is moving to delivery.`, 'success');
-                }, 100);
-            }
-        }
-        
-        /**
-         * Renders a simulated map display for the current location.
-         */
-        function renderMap(geo) {
-            const latPercent = ((geo.lat + 90) / 180) * 100; // Normalized latitude (0-100)
-            const lngPercent = ((geo.lng + 180) / 360) * 100; // Normalized longitude (0-100)
+                    notification.classList.add('translate-x-full', 'opacity-0');
+                    setTimeout(() => notification.remove(), 500);
+                }, 6000);
+            },
 
-            return `
-                <div class="w-full h-80 map-placeholder rounded-2xl shadow-xl relative mb-6">
-                    <!-- Stylized Globe/Route lines -->
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-2/3 h-2/3 border-4 border-dashed border-accent/40 rounded-full animate-spin-slow"></div>
-                        <div class="absolute inset-0 flex items-center justify-center text-accent text-3xl font-black italic opacity-10">ZENITH ROUTE</div>
-                    </div>
-
-                    <!-- Current Location Marker -->
-                    <div class="absolute p-3 bg-accent rounded-full shadow-2xl border-4 border-white animate-pulse-pin" 
-                         style="top: calc(${100 - latPercent}% - 16px); left: calc(${lngPercent}% - 16px);"
-                         title="Current Location: ${geo.location}">
-                        <i data-lucide="locate-fixed" class="h-6 w-6 text-primary"></i>
-                    </div>
-
-                    <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm p-3 rounded-lg text-lg font-bold text-gray-800 shadow-xl border border-accent/50">
-                        <i data-lucide="map-pin" class="h-5 w-5 inline mr-2 text-primary"></i> Current Location: ${geo.location}
-                    </div>
-                </div>
-            `;
-        }
-
-        /**
-         * Renders the HTML template for a single tracking result.
-         */
-        function renderShipmentResult(shipment) {
-            const statusClasses = getStatusClasses(shipment.statusKey);
-            const currentGeo = shipment.currentGeo;
-
-            // --- Clearance/Goods Management Block ---
-            let clearanceActionBlock = '';
-            if (shipment.isClearanceNeeded) {
-                clearanceActionBlock = `
-                    <div class="p-8 bg-warning/10 border-l-8 border-warning rounded-2xl shadow-2xl mb-12 transition duration-300">
-                        <div class="flex items-center mb-4">
-                            <i data-lucide="gavel" class="h-7 w-7 text-warning mr-4"></i>
-                            <h4 class="text-2xl font-bold text-gray-800">Regulatory Hold Initiated</h4>
-                        </div>
-                        <p class="text-gray-600 mb-6 text-base">This consignment requires immediate **Regulatory Compliance & Fee Settlement** for release from Customs. Proceed to the portal to submit documentation and duty payments.</p>
-                        <button onclick="openClearanceModal('${shipment.trackingNumber}')" class="w-full sm:w-80 px-8 py-4 bg-warning text-white font-semibold rounded-xl shadow-lg hover:bg-warning/90 focus:ring-4 focus:ring-warning/50 transition duration-150 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center">
-                            <i data-lucide="file-check-2" class="h-5 w-5 inline mr-3"></i> Access Compliance Portal
-                        </button>
+            /**
+             * Renders a generic message (initial state or error/loading).
+             */
+            displayMessage(title, message, iconName = 'search') {
+                this.resultsContainer.innerHTML = `
+                    <div class="text-center p-20 bg-white rounded-3xl shadow-xl border-2 border-dashed border-accent/50 transform scale-[0.98] opacity-90 transition duration-500 animate-slide-in">
+                        <i data-lucide="${iconName}" class="mx-auto h-24 w-24 text-accent mb-4 ${iconName === 'loader-circle' ? 'animate-spin-fast' : ''}"></i>
+                        <h3 class="mt-4 text-4xl font-bold text-gray-900">${title}</h3>
+                        <p class="mt-2 text-xl text-gray-500">${message}</p>
                     </div>
                 `;
-            }
+                lucide.createIcons();
+            },
 
-            // --- Recipient Status/Confirmation Block ---
-            let recipientActionBlock = '';
-            if (shipment.statusKey === 'status-delivered' && !shipment.receivedBy) {
-                recipientActionBlock = `
-                    <div class="p-8 bg-success/10 border-l-8 border-success rounded-2xl shadow-2xl mb-12 transition duration-300">
-                        <div class="flex items-center mb-4">
-                            <i data-lucide="package-check" class="h-7 w-7 text-success mr-4"></i>
-                            <h4 class="text-2xl font-bold text-gray-800">Final Delivery Confirmation</h4>
-                        </div>
-                        <p class="text-gray-600 mb-6 text-base">The physical delivery has been recorded. Please confirm receipt to finalize the transit record and authorize final closure of the Consignment ID.</p>
-                        <button onclick="confirmReceipt('${shipment.trackingNumber}')" class="w-full sm:w-80 px-8 py-4 bg-success text-white font-semibold rounded-xl shadow-lg hover:bg-success/90 focus:ring-4 focus:ring-success/50 transition duration-150 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center">
-                            <i data-lucide="handshake" class="h-5 w-5 inline mr-3"></i> Confirm Physical Receipt
-                        </button>
-                    </div>
-                `;
-            } else if (shipment.receivedBy) {
-                 recipientActionBlock = `
-                    <div class="p-5 bg-green-100 border border-success/50 rounded-xl shadow-inner mb-12 text-center">
-                         <p class="text-xl font-extrabold text-success flex items-center justify-center">
-                            <i data-lucide="bookmark-check" class="h-6 w-6 mr-3"></i> TRANSIT RECORD CLOSED: DELIVERED & CONFIRMED
-                         </p>
-                         <p class="text-sm text-gray-700 mt-1">Finalized by Consignee: ${shipment.receiverName}</p>
-                    </div>
-                `;
-            }
+            // --- Tracking Logic ---
+            
+            /**
+             * Main function to handle the tracking submission.
+             */
+            trackShipment() {
+                const trackingInput = document.getElementById('trackingInput');
+                const trackingNumber = trackingInput.value.trim().toUpperCase();
+                const trackButton = document.getElementById('trackButton');
 
-            // Generate the timeline history HTML
-            const historyHtml = shipment.history.map((event, index) => {
-                const isLatest = index === 0;
-                const dotColor = isLatest ? 'bg-accent ring-4 ring-primary/30' : 'bg-gray-400';
-                const textColor = isLatest ? 'font-bold text-gray-900' : 'text-gray-600';
+                this.resultsContainer.innerHTML = ''; // Clear previous results
+
+                if (!trackingNumber) {
+                    this.displayMessage("Input Error", "Please provide a valid Consignment ID to commence tracking.", 'alert-triangle');
+                    return;
+                }
+                
+                // Show loading state and disable button
+                trackButton.disabled = true;
+                trackButton.innerHTML = `<i data-lucide="loader-circle" class="h-6 w-6 mr-2 animate-spin-fast"></i> Searching...`;
+                this.displayMessage(
+                    "Establishing Connection...", 
+                    "Retrieving live data from the global logistics matrix. Please wait for real-time dossier upload.", 
+                    'loader-circle'
+                );
+
+                setTimeout(() => {
+                    const shipment = MOCK_SHIPMENTS.find(s => s.trackingNumber === trackingNumber);
+                    
+                    // Restore button state
+                    trackButton.disabled = false;
+                    trackButton.innerHTML = `<i data-lucide="radar" class="h-6 w-6 mr-2"></i> Initiate Search`;
+
+                    if (shipment) {
+                        this.resultsContainer.innerHTML = this.renderShipmentResult(shipment);
+                        lucide.createIcons(); 
+                    } else {
+                        this.displayMessage(
+                            "Consignment ID Not Found",
+                            `The identifier "${trackingNumber}" does not correspond to any active consignment record in our system.`,
+                            'alert-circle'
+                        );
+                    }
+                }, 2000); 
+            },
+
+            /**
+             * Renders a simulated map display.
+             */
+            renderMap(geo) {
+                // Simplified calculation for map pin positioning
+                const latPercent = ((geo.lat + 90) / 180) * 100; 
+                const lngPercent = ((geo.lng + 180) / 360) * 100; 
 
                 return `
-                    <li class="relative pb-8 pl-10">
-                        <!-- Timeline Pin/Dot -->
-                        <div class="absolute top-0 left-0 w-8 h-8 flex items-center justify-center">
-                            <span class="w-5 h-5 rounded-full ${dotColor} z-10 ${isLatest ? 'animate-pulse' : ''}"></span>
+                    <div class="w-full h-80 map-placeholder rounded-2xl shadow-xl relative mb-6">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-2/3 h-2/3 border-4 border-dashed border-accent/40 rounded-full animate-spin-slow"></div>
+                            <div class="absolute inset-0 flex items-center justify-center text-accent text-3xl font-black italic opacity-10">ZENITH ROUTE</div>
                         </div>
-                        <div class="ml-4 p-5 rounded-xl bg-white hover:bg-gray-50 transition duration-150 ease-in-out shadow-lg border-l-4 border-primary/20">
-                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 border-b border-dashed pb-2">
-                                <p class="text-xs font-bold text-primary uppercase tracking-widest flex items-center">
-                                    <i data-lucide="clock" class="h-3 w-3 mr-1"></i> ${event.date} / ${event.time}
-                                </p>
-                                <p class="text-sm text-gray-500 font-medium mt-1 sm:mt-0 flex items-center">
-                                    <i data-lucide="send" class="h-4 w-4 mr-1"></i> ${event.location}
-                                </p>
-                            </div>
-                            <p class="${textColor} text-base">${event.description}</p>
+
+                        <div class="absolute p-3 bg-accent rounded-full shadow-2xl border-4 border-white animate-pulse-pin" 
+                             style="top: calc(${100 - latPercent}% - 16px); left: calc(${lngPercent}% - 16px);"
+                             title="Current Location: ${geo.location}">
+                            <i data-lucide="locate-fixed" class="h-6 w-6 text-primary"></i>
                         </div>
-                    </li>
+
+                        <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm p-3 rounded-lg text-lg font-bold text-gray-800 shadow-xl border border-accent/50">
+                            <i data-lucide="map-pin" class="h-5 w-5 inline mr-2 text-primary"></i> Current Location: ${geo.location}
+                        </div>
+                    </div>
                 `;
-            }).join('');
+            },
 
-            // Assemble the main result card
-            const resultHtml = `
-                <div class="tracking-result bg-white p-6 sm:p-12 rounded-3xl border-t-4 border-primary">
-                    
-                    <!-- Header and Status -->
-                    <div class="flex justify-between items-start flex-wrap gap-4 mb-10 border-b-2 pb-6 border-gray-200">
-                        <h3 class="text-4xl font-extrabold text-gray-900 flex items-center">
-                            <i data-lucide="clipboard-list" class="h-8 w-8 mr-3 text-primary"></i> Consignment ID: <span class="text-accent ml-2 tracking-tight">${shipment.trackingNumber}</span>
-                        </h3>
-                        <span class="px-6 py-2 rounded-full text-lg font-extrabold tracking-wider ${statusClasses} shadow-xl">
-                            ${shipment.status.toUpperCase()}
-                        </span>
-                    </div>
+            /**
+             * Renders the HTML template for a single tracking result, including enhanced dossier details.
+             */
+            renderShipmentResult(shipment) {
+                const statusClasses = this.getStatusClasses(shipment.statusKey);
+                const currentGeo = shipment.currentGeo;
+                const consignee = shipment.consigneeDetails;
 
-                    <!-- Dynamic Action Blocks -->
-                    ${clearanceActionBlock}
-                    ${recipientActionBlock}
-
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <!-- Map View (2/3 width on large screens) -->
-                        <div class="lg:col-span-2">
-                            <h4 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                                <i data-lucide="map" class="h-6 w-6 mr-2 text-primary"></i> Real-Time Geospatial Tracking
-                            </h4>
-                            ${renderMap(currentGeo)}
-                            <div class="p-4 bg-secondary rounded-xl shadow-inner text-sm text-gray-700 mt-4 border border-accent/30">
-                                <p class="font-bold">Protocol Advisory:</p>
-                                <p>Map location updates automatically every 5 minutes from the last reported waypoint. Data provided in UTC/Zulu time.</p>
+                // --- Clearance/Goods Management Block ---
+                let clearanceActionBlock = '';
+                if (shipment.isClearanceNeeded) {
+                    clearanceActionBlock = `
+                        <div class="p-8 bg-warning/10 border-l-8 border-warning rounded-2xl shadow-2xl mb-12 transition duration-300">
+                            <div class="flex items-center mb-4">
+                                <i data-lucide="gavel" class="h-7 w-7 text-warning mr-4"></i>
+                                <h4 class="text-2xl font-bold text-gray-800">Regulatory Hold Initiated</h4>
                             </div>
+                            <p class="text-gray-600 mb-6 text-base">This consignment requires immediate **Regulatory Compliance & Fee Settlement** for release from Customs. Proceed to the portal to view the fee breakdown and submit documentation.</p>
+                            <button onclick="ZenithApp.openClearanceModal('${shipment.trackingNumber}')" class="w-full sm:w-80 px-8 py-4 bg-warning text-white font-semibold rounded-xl shadow-lg hover:bg-warning/90 focus:ring-4 focus:ring-warning/50 transition duration-150 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center">
+                                <i data-lucide="file-check-2" class="h-5 w-5 inline mr-3"></i> Access Compliance Portal
+                            </button>
                         </div>
-                        
-                        <!-- Sender/Receiver and Core Metrics (1/3 width on large screens) -->
-                        <div class="lg:col-span-1 space-y-6">
-                            <h4 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                                <i data-lucide="list-ordered" class="h-6 w-6 mr-2 text-primary"></i> Consignment Dossier
-                            </h4>
-                            
-                            <!-- Sender/Receiver Block -->
-                            <div class="p-5 bg-primary/90 rounded-2xl shadow-xl text-white">
-                                <p class="text-xs font-semibold uppercase text-accent mb-2">Transaction Parties</p>
-                                <p class="text-lg font-bold flex items-center"><i data-lucide="arrow-up-right" class="h-4 w-4 mr-2 text-accent"></i> Shipper: ${shipment.senderName}</p>
-                                <p class="text-lg font-bold flex items-center mt-1"><i data-lucide="arrow-down-left" class="h-4 w-4 mr-2 text-accent"></i> Consignee: ${shipment.receiverName}</p>
-                            </div>
-
-                            <!-- Core Metrics List -->
-                            <div class="p-5 bg-white rounded-2xl shadow-xl border border-gray-200 space-y-3">
-                                <div class="flex justify-between items-center pb-2 border-b border-dashed">
-                                    <p class="text-sm font-medium text-gray-600 flex items-center"><i data-lucide="calendar" class="h-5 w-5 mr-2 text-primary"></i> Est. Delivery Date</p>
-                                    <p class="text-lg font-extrabold text-primary">${shipment.estimatedDelivery}</p>
-                                </div>
-                                <div class="flex justify-between items-center pb-2 border-b border-dashed">
-                                    <p class="text-sm font-medium text-gray-600 flex items-center"><i data-lucide="box" class="h-5 w-5 mr-2 text-primary"></i> Dead Weight</p>
-                                    <p class="text-lg font-extrabold text-primary">${shipment.weight}</p>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-medium text-gray-600 flex items-center"><i data-lucide="scale" class="h-5 w-5 mr-2 text-primary"></i> Volumetric Weight</p>
-                                    <p class="text-lg font-extrabold text-primary">${shipment.volumetricWeight}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tracking Timeline -->
-                    <h4 class="text-2xl font-bold text-gray-800 mt-10 mb-6 border-t-2 pt-6 flex items-center">
-                        <i data-lucide="git-branch" class="h-6 w-6 mr-3 text-primary"></i> Full Transit History Log
-                    </h4>
-                    <div class="relative pl-4">
-                        <!-- Vertical Timeline Line -->
-                        <div class="timeline-line"></div>
-                        <ul class="space-y-4">
-                            ${historyHtml}
-                        </ul>
-                    </div>
-                </div>
-            `;
-            return resultHtml;
-        }
-
-        /**
-         * Displays a generic message (initial state or error).
-         */
-        function displayMessage(title, message, iconName = 'search') {
-            resultsContainer.innerHTML = `
-                <div class="text-center p-20 bg-white rounded-3xl shadow-xl border-2 border-dashed border-accent/50 transform scale-[0.98] opacity-90 transition duration-500">
-                    <i data-lucide="${iconName}" class="mx-auto h-24 w-24 text-accent mb-4 animate-pulse-slow"></i>
-                    <h3 class="mt-4 text-4xl font-bold text-gray-900">${title}</h3>
-                    <p class="mt-2 text-xl text-gray-500">${message}</p>
-                </div>
-            `;
-            lucide.createIcons();
-        }
-
-        /**
-         * Main function to handle the tracking submission.
-         */
-        function trackShipment() {
-            const trackingInput = document.getElementById('trackingInput');
-            const trackingNumber = trackingInput.value.trim().toUpperCase();
-
-            resultsContainer.innerHTML = ''; // Clear previous results
-
-            if (!trackingNumber) {
-                displayMessage(
-                    "Input Error",
-                    "Please provide a valid Consignment ID to commence tracking.",
-                    'alert-triangle'
-                );
-                return;
-            }
-
-            // Simulate API call delay with professional loading message
-            displayMessage(
-                "Establishing Connection...", 
-                "Retrieving live data from the global logistics matrix. Please wait for real-time dossier upload.", 
-                'loader-circle'
-            );
-
-            setTimeout(() => {
-                const shipment = MOCK_SHIPMENTS.find(s => s.trackingNumber === trackingNumber);
-
-                if (shipment) {
-                    resultsContainer.innerHTML = renderShipmentResult(shipment);
-                    lucide.createIcons(); 
-                } else {
-                    displayMessage(
-                        "Consignment ID Not Found",
-                        `The identifier "${trackingNumber}" does not correspond to any active consignment record in our system.`,
-                        'alert-circle'
-                    );
+                    `;
                 }
-            }, 2000); // 2 second delay for a "professional" load
-        }
+                
+                // Generate the timeline history HTML
+                const historyHtml = shipment.history.map((event, index) => {
+                    const isLatest = index === 0;
+                    const dotColor = isLatest ? 'bg-accent ring-4 ring-primary/30' : 'bg-gray-400';
+                    const textColor = isLatest ? 'font-bold text-gray-900' : 'text-gray-600';
 
-        // Add event listener for 'Enter' key press on the input field and initial icon rendering
+                    return `
+                        <li class="relative pb-8 pl-10">
+                            ${index > 0 ? `<div class="absolute w-0.5 bg-gray-300 left-3 top-0 bottom-8"></div>` : ''} 
+                            <div class="absolute top-0 left-0 w-8 h-8 flex items-center justify-center">
+                                <span class="w-5 h-5 rounded-full ${dotColor} z-10 ${isLatest ? 'animate-pulse' : ''}"></span>
+                            </div>
+                            <div class="ml-4 p-5 rounded-xl bg-white hover:bg-gray-50 transition duration-150 ease-in-out shadow-lg border-l-4 border-primary/20">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 border-b border-dashed pb-2">
+                                    <p class="text-xs font-bold text-primary uppercase tracking-widest flex items-center">
+                                        <i data-lucide="clock" class="h-3 w-3 mr-1"></i> ${event.date} / ${event.time}
+                                    </p>
+                                    <p class="text-sm text-gray-500 font-medium mt-1 sm:mt-0 flex items-center">
+                                        <i data-lucide="send" class="h-4 w-4 mr-1"></i> ${event.location}
+                                    </p>
+                                </div>
+                                <p class="${textColor} text-base">${event.description}</p>
+                            </div>
+                        </li>
+                    `;
+                }).join('');
+
+                // Assemble the main result card
+                const resultHtml = `
+                    <div class="tracking-result bg-white p-6 sm:p-12 rounded-3xl border-t-4 border-primary animate-slide-in">
+                        
+                        <div class="flex justify-between items-start flex-wrap gap-4 mb-10 border-b-2 pb-6 border-gray-200">
+                            <h3 class="text-4xl font-extrabold text-gray-900 flex items-center">
+                                <i data-lucide="clipboard-list" class="h-8 w-8 mr-3 text-primary"></i> Consignment ID: <span class="text-accent ml-2 tracking-tight">${shipment.trackingNumber}</span>
+                            </h3>
+                            <span class="px-6 py-2 rounded-full text-lg font-extrabold tracking-wider ${statusClasses} shadow-xl">
+                                ${shipment.status.toUpperCase()}
+                            </span>
+                        </div>
+
+                        <!-- Dynamic Action Block -->
+                        ${clearanceActionBlock}
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="lg:col-span-2">
+                                <h4 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                                    <i data-lucide="map" class="h-6 w-6 mr-2 text-primary"></i> Real-Time Geospatial Tracking
+                                </h4>
+                                ${this.renderMap(currentGeo)}
+                            </div>
+                            
+                            <div class="lg:col-span-1 space-y-6">
+                                <h4 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                                    <i data-lucide="user-check" class="h-6 w-6 mr-2 text-primary"></i> Consignee Dossier
+                                </h4>
+                                
+                                <div class="p-5 bg-primary/90 rounded-2xl shadow-xl text-white">
+                                    <p class="text-xs font-semibold uppercase text-accent mb-2">Transaction Parties Summary</p>
+                                    <p class="text-lg font-bold flex items-center"><i data-lucide="arrow-up-right" class="h-4 w-4 mr-2 text-accent"></i> Shipper: ${shipment.senderName}</p>
+                                    <p class="text-lg font-bold flex items-center mt-1"><i data-lucide="arrow-down-left" class="h-4 w-4 mr-2 text-accent"></i> Consignee: ${consignee.fullName}</p>
+                                </div>
+
+                                <div class="p-5 bg-white rounded-2xl shadow-xl border border-gray-200 space-y-3">
+                                    <p class="text-lg font-bold text-zenith-dark mb-3 border-b pb-2 border-dashed">Full Recipient Details</p>
+                                    <div class="flex items-center">
+                                        <i data-lucide="mail" class="h-5 w-5 mr-3 text-primary"></i>
+                                        <span class="text-sm font-medium text-gray-600 truncate">${consignee.email}</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i data-lucide="phone" class="h-5 w-5 mr-3 text-primary"></i>
+                                        <span class="text-sm font-medium text-gray-600">${consignee.phone}</span>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i data-lucide="home" class="h-5 w-5 mr-3 text-primary mt-1 flex-shrink-0"></i>
+                                        <span class="text-sm font-medium text-gray-600">${consignee.address}, ${consignee.cityStateZip}, ${consignee.country}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center pt-3 border-t">
+                                        <p class="text-sm font-medium text-gray-600 flex items-center"><i data-lucide="calendar" class="h-5 w-5 mr-2 text-primary"></i> Est. Delivery</p>
+                                        <p class="text-lg font-extrabold text-primary">${shipment.estimatedDelivery}</p>
+                                    </div>
+                                </div>
+                                
+                                <button onclick="ZenithApp.openPrintDocumentModal('${shipment.trackingNumber}')" class="w-full px-8 py-4 bg-accent text-primary font-bold rounded-xl shadow-lg hover:bg-accent/80 transition duration-150 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center">
+                                    <i data-lucide="file-text" class="h-5 w-5 inline mr-3"></i> Generate Commercial Manifest
+                                </button>
+                            </div>
+                        </div>
+
+                        <h4 class="text-2xl font-bold text-gray-800 mt-10 mb-6 border-t-2 pt-6 flex items-center">
+                            <i data-lucide="git-branch" class="h-6 w-6 mr-3 text-primary"></i> Full Transit History Log
+                        </h4>
+                        <div class="relative pl-4">
+                            <div class="timeline-line"></div>
+                            <ul class="space-y-4">
+                                ${historyHtml}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                return resultHtml;
+            },
+
+            // --- Modal and Clearance Logic ---
+            
+            /**
+             * Renders the detailed fee breakdown and regulatory reasoning for the modal.
+             */
+            renderFeeBreakdown(shipment) {
+                const items = shipment.customsInfo.lineItems;
+                const reasoning = shipment.customsInfo.reasoning;
+                const isPaid = shipment.customsInfo.isPaid;
+                const statusColor = isPaid ? 'text-success' : 'text-danger';
+                const totalCost = shipment.customsInfo.cost;
+
+                const costText = isPaid 
+                    ? 'COMPLIANCE STATUS: DUTIES AND TAXES SETTLED'
+                    : `TOTAL REGULATORY FEES DUE: $${totalCost.toFixed(2)}`;
+                    
+                let breakdownHtml = `
+                    <div class="p-5 bg-secondary rounded-xl font-black text-2xl text-primary text-center mb-6 shadow-inner">
+                        ${costText}
+                    </div>
+
+                    <div class="mt-8 border rounded-xl p-5 bg-gray-50/50">
+                        <h5 class="text-xl font-extrabold text-primary mb-3 flex items-center">
+                            <i data-lucide="calculator" class="h-5 w-5 mr-2"></i> Regulatory Fee Breakdown
+                        </h5>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Description</th>
+                                        <th class="px-3 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider hidden sm:table-cell">Basis/Value</th>
+                                        <th class="px-3 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">Fee (USD)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    ${items.map(item => `
+                                        <tr>
+                                            <td class="px-3 py-3 whitespace-normal text-sm font-medium text-gray-900">${item.description}</td>
+                                            <td class="px-3 py-3 whitespace-nowrap text-right text-sm text-gray-500 hidden sm:table-cell">${item.basis}</td>
+                                            <td class="px-3 py-3 whitespace-nowrap text-right text-sm font-bold text-gray-700">$${item.fee.toFixed(2)}</td>
+                                        </tr>
+                                    `).join('')}
+                                    <tr class="bg-primary/5">
+                                        <td class="px-3 py-3 text-lg font-extrabold text-primary">TOTAL DUE</td>
+                                        <td class="px-3 py-3 text-sm text-gray-500 hidden sm:table-cell"></td>
+                                        <td class="px-3 py-3 whitespace-nowrap text-right text-lg font-extrabold ${statusColor}">$${totalCost.toFixed(2)}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-5 bg-info/10 border-l-4 border-info rounded-xl">
+                        <h5 class="text-xl font-extrabold text-gray-800 mb-2 flex items-center">
+                            <i data-lucide="clipboard-list" class="h-5 w-5 mr-2"></i> Regulatory Compliance Rationale
+                        </h5>
+                        <p class="text-gray-700 text-base">${reasoning}</p>
+                    </div>
+                `;
+                return breakdownHtml;
+            },
+
+            /**
+             * Opens the detailed Customs Clearance Modal.
+             */
+            openClearanceModal(trackingNumber) {
+                const clearanceModal = document.getElementById('clearanceModal');
+                const shipment = MOCK_SHIPMENTS.find(s => s.trackingNumber === trackingNumber);
+                if (!shipment || !shipment.isClearanceNeeded) return;
+
+                document.getElementById('modal-tracking-number').textContent = `Consignment ID: ${trackingNumber}`;
+                document.getElementById('modal-details-container').innerHTML = this.renderFeeBreakdown(shipment);
+                this.renderClearanceActions(shipment);
+
+                clearanceModal.classList.remove('hidden');
+                lucide.createIcons();
+            },
+
+            /**
+             * Closes the Customs Clearance Modal.
+             */
+            closeClearanceModal() {
+                document.getElementById('clearanceModal').classList.add('hidden');
+                lucide.createIcons();
+            },
+
+            /**
+             * Renders the action buttons inside the clearance modal based on current status.
+             */
+            renderClearanceActions(shipment) {
+                const actionsContainer = document.getElementById('modal-actions-container');
+                let html = '';
+
+                // 1. Document Submission Step
+                if (shipment.customsInfo.documentsRequired && !shipment.customsInfo.isDocumentsSubmitted) {
+                    html += `
+                        <div class="flex items-center p-4 border rounded-xl shadow-sm bg-accent/10">
+                            <i data-lucide="upload-cloud" class="h-6 w-6 text-primary mr-4 flex-shrink-0"></i>
+                            <div class="flex-grow">
+                                <p class="font-medium text-gray-700">Submit Required Trade Documentation</p>
+                                <p class="text-xs text-gray-500">Commercial Invoice, KYC/ID Verification (Mandatory for this HS Code)</p>
+                            </div>
+                            <button onclick="ZenithApp.simulateClearanceAction('${shipment.trackingNumber}', 'documents')" class="ml-4 px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/80 transition">
+                                Submit Documents
+                            </button>
+                        </div>
+                    `;
+                } else if (shipment.customsInfo.documentsRequired) {
+                    // Docs are submitted, but might be pending review/inspection
+                     html += `
+                        <div class="flex items-center p-4 border border-success/50 bg-green-50 rounded-xl shadow-inner">
+                            <i data-lucide="check-circle" class="h-6 w-6 text-success mr-4 flex-shrink-0"></i>
+                            <p class="flex-grow font-medium text-success">Documentation Verified and Approved</p>
+                        </div>
+                    `;
+                }
+
+                // 2. Payment Step 
+                if (!shipment.customsInfo.isPaid && shipment.customsInfo.cost > 0) {
+                    html += `
+                        <div class="flex items-center p-4 border rounded-xl shadow-sm bg-paystack/10">
+                            <i data-lucide="credit-card" class="h-6 w-6 text-paystack mr-4 flex-shrink-0"></i>
+                            <div class="flex-grow">
+                                <p class="font-medium text-gray-700">Settle Regulatory Duties and Taxes</p>
+                                <p class="text-xs text-gray-500">Payment Gateway: **Paystack Test Key** (${TEST_PAYMENT_KEY.substring(0, 10)}...)</p>
+                            </div>
+                            <button id="payButton_${shipment.trackingNumber}" onclick="ZenithApp.simulateClearanceAction('${shipment.trackingNumber}', 'payment')" class="ml-4 px-4 py-2 bg-paystack text-white text-sm font-semibold rounded-lg shadow-lg hover:bg-paystack/90 transition">
+                                Pay $${shipment.customsInfo.cost.toFixed(2)}
+                            </button>
+                        </div>
+                    `;
+                } else if (shipment.customsInfo.cost > 0) {
+                    html += `
+                        <div class="flex items-center p-4 border border-success/50 bg-green-50 rounded-xl shadow-inner">
+                            <i data-lucide="check-circle" class="h-6 w-6 text-success mr-4 flex-shrink-0"></i>
+                            <p class="flex-grow font-medium text-success">Financial Obligations Fulfilled</p>
+                        </div>
+                    `;
+                }
+
+                actionsContainer.innerHTML = html;
+                lucide.createIcons();
+            },
+
+            /**
+             * Simulates a single action (payment or document submission).
+             */
+            simulateClearanceAction(trackingNumber, actionType) {
+                const shipmentIndex = MOCK_SHIPMENTS.findIndex(s => s.trackingNumber === trackingNumber);
+                if (shipmentIndex === -1) return;
+
+                let shipment = MOCK_SHIPMENTS[shipmentIndex];
+
+                if (actionType === 'payment') {
+                    // Open the Paystack simulation modal
+                    this.closeClearanceModal(); 
+                    this.openPaystackSimulationModal(shipment);
+
+                } else if (actionType === 'documents') {
+                    // Document Submission Simulation
+                    shipment.customsInfo.isDocumentsSubmitted = true;
+                    
+                    if (!shipment.customsInfo.isPaid) {
+                        // Docs submitted, but payment needed: change status to AWAITING_PAYMENT
+                        shipment.status = "Awaiting Payment";
+                        shipment.statusKey = "status-pending";
+                        ZenithApp.showNotification("Documents Processed", `Trade documents received and APPROVED. Payment is now the only pending item.`, 'info');
+                    }
+                    
+                    this.checkAndFinalizeClearance(shipment, trackingNumber);
+                }
+            },
+
+            /**
+             * Checks if all clearance conditions are met and finalizes the shipment status.
+             */
+            checkAndFinalizeClearance(shipment, trackingNumber) {
+                const isFullyCleared = shipment.customsInfo.isPaid && (!shipment.customsInfo.documentsRequired || shipment.customsInfo.isDocumentsSubmitted);
+                const isPartiallyCleared = shipment.customsInfo.isPaid || shipment.customsInfo.isDocumentsSubmitted;
+
+                if (isFullyCleared) {
+                    // FINAL CLEARANCE
+                    shipment.isClearanceNeeded = false;
+                    shipment.status = "Cleared, En Route to Destination";
+                    shipment.statusKey = "status-cleared";
+                    
+                    const date = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
+                    const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                    shipment.history.unshift({
+                        date: date,
+                        time: time,
+                        location: shipment.currentGeo.location,
+                        description: 'Customs Clearance Complete! Shipment released and routed for final delivery scheduling.'
+                    });
+
+                    // Re-render the main tracking page
+                    this.resultsContainer.innerHTML = this.renderShipmentResult(shipment);
+                    lucide.createIcons();
+                    ZenithApp.showNotification("Shipment Released!", `Consignment ${trackingNumber} has been successfully cleared by Customs and is now scheduled for onward transit.`, 'success');
+
+                } else if (isPartiallyCleared && shipment.customsInfo.documentsRequired && !shipment.customsInfo.isPaid) {
+                     // Docs submitted, need payment -> Re-open/update modal to show next step
+                     shipment.status = "Awaiting Payment";
+                     shipment.statusKey = "status-pending";
+                     this.openClearanceModal(trackingNumber);
+                } else if (isPartiallyCleared && shipment.customsInfo.isPaid && shipment.customsInfo.documentsRequired && !shipment.customsInfo.isDocumentsSubmitted) {
+                     // Payment done, need docs -> Change status to AWAITING_INSPECTION
+                     shipment.status = "Awaiting Inspection";
+                     shipment.statusKey = "status-inspection";
+                     ZenithApp.showNotification("Payment Received", `Payment successfully recorded. Awaiting final submission of trade documents for Customs inspection.`, 'warning');
+                     this.openClearanceModal(trackingNumber);
+                } else {
+                    // Fallback to update main modal (e.g., if payment failed)
+                    this.openClearanceModal(trackingNumber);
+                }
+            },
+
+            // --- Paystack Modal Functions ---
+
+            /**
+             * Opens the Paystack simulation modal with specific details.
+             */
+            openPaystackSimulationModal(shipment) {
+                document.getElementById('paystackModalTrackingNumber').textContent = shipment.trackingNumber;
+                document.getElementById('paystackModalAmount').textContent = `$${shipment.customsInfo.cost.toFixed(2)}`;
+                document.getElementById('paystackTestKeyDisplay').textContent = TEST_PAYMENT_KEY;
+                document.getElementById('paystackSimulationModal').classList.remove('hidden');
+                lucide.createIcons();
+            },
+
+            /**
+             * Closes the Paystack simulation modal.
+             */
+            closePaystackSimulationModal() {
+                document.getElementById('paystackSimulationModal').classList.add('hidden');
+            },
+
+            /**
+             * Handles the simulated callback from the payment gateway (success or failure).
+             */
+            handlePaystackCallback(trackingNumber, status) {
+                this.closePaystackSimulationModal(); // Close the simulation modal first
+
+                const shipmentIndex = MOCK_SHIPMENTS.findIndex(s => s.trackingNumber === trackingNumber);
+                if (shipmentIndex === -1) return;
+                let shipment = MOCK_SHIPMENTS[shipmentIndex];
+                
+                // Simulate network latency before updating
+                setTimeout(() => {
+                    if (status === 'success') {
+                        shipment.customsInfo.isPaid = true;
+                        ZenithApp.showNotification("Payment Successful", `Transaction approved via Paystack Gateway. Reference: ${Math.random().toString(36).substring(2, 10).toUpperCase()}`, 'success');
+                        this.checkAndFinalizeClearance(shipment, trackingNumber);
+
+                    } else if (status === 'failure') {
+                        // Payment failed, return to the main compliance portal
+                        ZenithApp.showNotification("Payment Failed", `Transaction denied or cancelled. Please review payment details and try again.`, 'danger');
+                        this.openClearanceModal(trackingNumber);
+                    }
+                }, 1000);
+            },
+
+            // --- Printable Document Functions ---
+
+            /**
+             * Renders the HTML content for the print modal (Manifest/Invoice).
+             */
+            renderPrintableDocument(shipment) {
+                const consignee = shipment.consigneeDetails;
+                const date = new Date().toLocaleDateString('en-US');
+                const time = new Date().toLocaleTimeString('en-US');
+
+                // Reusing the fee breakdown function for a clean financial table
+                const feeBreakdownHtml = this.renderFeeBreakdown(shipment)
+                    .replace('<div class="mt-8 border rounded-xl p-5 bg-gray-50/50">', '<div class="mt-8 border border-gray-300 rounded-xl p-0">')
+                    .replace('<h5 class="text-xl font-extrabold text-primary mb-3 flex items-center">', '<h5 class="text-xl font-extrabold text-primary p-3 bg-gray-50 flex items-center">');
+                
+                return `
+                    <div class="printable-document p-8 sm:p-10">
+                        <div class="flex justify-between items-center border-b-4 border-primary pb-4 mb-8">
+                            <div>
+                                <h1 class="text-5xl font-black text-primary flex items-center">
+                                    ZENITH ROUTE 
+                                    <span class="text-accent text-lg font-semibold ml-3">MANIFEST</span>
+                                </h1>
+                                <p class="text-sm text-gray-500 mt-2">Generated On: ${date} at ${time}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-2xl font-bold text-gray-800">Consignment ID:</p>
+                                <p class="text-4xl font-extrabold text-accent">${shipment.trackingNumber}</p>
+                            </div>
+                        </div>
+
+                        <!-- Transaction Parties -->
+                        <div class="grid grid-cols-2 gap-8 mb-12">
+                            <div>
+                                <h2 class="text-2xl font-bold text-zenith-dark border-b-2 border-dashed pb-2 mb-4">Shipper Information</h2>
+                                <p class="text-lg font-semibold">${shipment.senderName}</p>
+                                <p class="text-gray-600">Origin: ${shipment.origin}</p>
+                                <p class="text-gray-600">Documentary Agent: ZEN-SHZ-204</p>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-zenith-dark border-b-2 border-dashed pb-2 mb-4">Consignee Information</h2>
+                                <p class="text-lg font-semibold text-primary">${consignee.fullName}</p>
+                                <p class="text-gray-600">${consignee.address}, ${consignee.cityStateZip}</p>
+                                <p class="text-gray-600">Contact: ${consignee.phone} | ${consignee.email}</p>
+                            </div>
+                        </div>
+
+                        <!-- Consignment & Customs Summary -->
+                        <div class="mb-12">
+                            <h2 class="text-2xl font-bold text-zenith-dark border-b-2 border-dashed pb-2 mb-4">Consignment Summary</h2>
+                            <div class="grid grid-cols-4 gap-4 bg-gray-50 p-4 rounded-xl">
+                                <div class="p-2 border-r">
+                                    <p class="text-xs uppercase text-gray-500 font-medium">Destination</p>
+                                    <p class="text-base font-semibold">${shipment.destination}</p>
+                                </div>
+                                <div class="p-2 border-r">
+                                    <p class="text-xs uppercase text-gray-500 font-medium">Est. Delivery</p>
+                                    <p class="text-base font-semibold">${shipment.estimatedDelivery}</p>
+                                </div>
+                                <div class="p-2 border-r">
+                                    <p class="text-xs uppercase text-gray-500 font-medium">Current Status</p>
+                                    <p class="text-base font-semibold text-primary">${shipment.status}</p>
+                                </div>
+                                <div class="p-2">
+                                    <p class="text-xs uppercase text-gray-500 font-medium">Customs Clear?</p>
+                                    <p class="text-base font-semibold text-${shipment.isClearanceNeeded ? 'danger' : 'success'}">${shipment.isClearanceNeeded ? 'NO (HOLD)' : 'YES (CLEARED)'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Regulatory & Financial Details -->
+                        <h2 class="text-2xl font-bold text-zenith-dark border-b-2 border-dashed pb-2 mb-4">Regulatory & Financial Dossier</h2>
+                        ${feeBreakdownHtml}
+                        
+                        <div class="mt-12 text-center text-sm text-gray-500 pt-4 border-t border-dashed">
+                            <p>This document is a commercial invoice and manifest summary. It is digitally signed by Zenith Route Systems and does not require a wet signature.</p>
+                        </div>
+                    </div>
+                `;
+            },
+
+            /**
+             * Opens the dedicated print modal.
+             */
+            openPrintDocumentModal(trackingNumber) {
+                const shipment = MOCK_SHIPMENTS.find(s => s.trackingNumber === trackingNumber);
+                if (!shipment) return;
+
+                document.getElementById('printableContent').innerHTML = this.renderPrintableDocument(shipment);
+                document.getElementById('printDocumentModal').classList.remove('hidden');
+                lucide.createIcons();
+            },
+
+            /**
+             * Closes the dedicated print modal.
+             */
+            closePrintDocumentModal() {
+                document.getElementById('printDocumentModal').classList.add('hidden');
+            }
+        };
+
+        // Initialize application listeners
         document.addEventListener('DOMContentLoaded', () => {
             const trackingInput = document.getElementById('trackingInput');
             trackingInput.addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
                     event.preventDefault();
-                    trackShipment();
+                    ZenithApp.trackShipment();
                 }
             });
             lucide.createIcons();
         });
 
-        // Add CSS keyframes to the document head
-        const style = document.createElement('style');
-        style.textContent += `
-            @keyframes pulse-slow {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.6; }
-            }
-            .animate-pulse-slow {
-                animation: pulse-slow 5s infinite;
-            }
-            @keyframes spin-slow {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-            .animate-spin-slow {
-                animation: spin-slow 20s linear infinite;
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
