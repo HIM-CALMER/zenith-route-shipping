@@ -2,1471 +2,739 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Updated viewport meta tag to prevent zooming and ensure strict width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>ZenithRoute - Global Shipping & Tracking</title>
-    <!-- Tailwind CSS CDN -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Route Advanced Tracking & Compliance</title>
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Custom CSS for gradient animation and overrides */
-        body {
-            font-family: 'Inter', sans-serif;
-            color: #1a202c; /* Tailwind's gray-900 equivalent */
-            background: linear-gradient(135deg, #e0f2f7, #bbdefb, #90caf9); /* Sky blue gradient */
-            background-size: 300% 300%; /* Larger background to animate */
-            animation: gradient-animation 15s ease infinite alternate; /* Smooth, slow animation */
-            overflow-x: hidden; /* Ensure no horizontal scrolling on the body */
-        }
-
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Custom scrollbar for better aesthetics */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0, 123, 255, 0.5); /* Sky blue thumb */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 123, 255, 0.7);
-        }
-
-        /* ZenithRoute Logo Gradient Effect */
-        .zenith-logo-text {
-            background-image: linear-gradient(45deg, #007bff, #00c6ff, #007bff); /* Blue to cyan gradient */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            animation: text-gradient-animation 5s ease infinite alternate;
-            background-size: 200% auto;
-            /* Added subtle text shadow for depth */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        @keyframes text-gradient-animation {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        /* Card and Button Hover Effects - Enhanced */
-        .card-hover:hover {
-            transform: translateY(-8px); /* Slightly more pronounced lift */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Stronger, softer shadow */
-            border-color: #007bff; /* Subtle border on hover */
-        }
-        .card-hover {
-            border: 1px solid rgba(0, 0, 0, 0.05); /* Very light initial border for definition */
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
-        }
-
-        .btn-primary {
-            background-color: #007bff; /* Primary Blue */
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Initial shadow */
-            border: 1px solid #0056b3; /* Darker blue border */
-        }
-        .btn-primary:hover:not(:disabled) {
-            background-color: #0056b3; /* Darker Blue */
-            transform: translateY(-3px); /* More lift */
-            box-shadow: 0 6px 12px rgba(0,0,0,0.25); /* More pronounced shadow */
-        }
-        .btn-primary:active:not(:disabled) {
-            transform: translateY(0);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-        }
-        .btn-primary:disabled {
-            background-color: #a0aec0; /* Tailwind gray-400 */
-            cursor: not-allowed;
-            opacity: 0.8;
-            box-shadow: none;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d; /* Gray */
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Initial shadow */
-            border: 1px solid #5a6268; /* Darker gray border */
-        }
-        .btn-secondary:hover:not(:disabled) {
-            background-color: #5a6268; /* Darker Gray */
-            transform: translateY(-3px); /* More lift */
-            box-shadow: 0 6px 12px rgba(0,0,0,0.25); /* More pronounced shadow */
-        }
-        .btn-secondary:active:not(:disabled) {
-            transform: translateY(0);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-        }
-        .btn-secondary:disabled {
-            background-color: #a0aec0; /* Tailwind gray-400 */
-            cursor: not-allowed;
-            opacity: 0.8;
-            box-shadow: none;
-        }
-
-        /* Input focus styling - Enhanced */
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #007bff !important; /* Sky blue border on focus */
-            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.35); /* Stronger focus ring */
-        }
-        
-        /* Ensures images are responsive within containers */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Responsive Navbar - CSS for visual appearance only, display handled by JS and Tailwind classes */
-        .navbar-menu {
-            /* These styles are for the visual container of the mobile menu */
-            position: absolute; /* Position relative to the header */
-            top: 100%; /* Drop down below the header */
-            left: 0;
-            right: 0;
-            width: 100%; /* Take full width */
-            background-color: rgba(255, 255, 255, 0.98); /* Slightly more opaque */
-            border-radius: 10px;
-            margin-top: 10px;
-            padding: 10px;
-            z-index: 60; /* Ensure menu is above other content when open */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Stronger shadow for visibility */
-            animation: slideDown 0.3s ease-out forwards; /* Smooth slide down animation */
-            transform-origin: top; /* Animate from top */
-            border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border for definition */
-        }
-        .navbar-toggle {
-            display: block;
-            z-index: 70; /* Ensure toggle is clickable above everything else */
-        }
-
-        @keyframes slideDown {
-            from { transform: scaleY(0); opacity: 0; }
-            to { transform: scaleY(1); opacity: 1; }
-        }
-
-        /* Custom spinner utility class */
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #fff;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Map Canvas styling - Enhanced */
-        #tracking-map-canvas {
-            border: 1px solid #e2e8f0; /* Light border */
-            background-color: #eff6ff; /* Very light blue background */
-            border-radius: 12px; /* Slightly more rounded corners */
-            margin-top: 1.5rem; /* Increased margin */
-            display: block; /* Ensures no extra space below */
-            width: 100%; /* Make it fluid */
-            aspect-ratio: 2 / 1; /* Maintain aspect ratio for consistent map shape */
-            max-height: 380px; /* Slightly increased max height */
-            touch-action: none; /* Disable default touch actions to prevent native zooming/panning interference */
-            overflow: hidden; /* Important for preventing drawing outside bounds during transformations */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Added stronger shadow */
-        }
-        @media (max-width: 768px) {
-            #tracking-map-canvas {
-                min-height: 200px; /* Slightly increased min height for mobile */
+    <!-- Load Lucide Icons for better visuals -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Configure Tailwind for custom theme and animations -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        // Zenith Route High-Tech Corporate Colors
+                        'primary': '#1E3A8A', // Deep Navy Blue
+                        'accent': '#38BDF8', // Bright Cyan/Sky Blue
+                        'secondary': '#E0F2F7', // Very light blue-gray
+                        'success': '#10B981',
+                        'info': '#3B82F6',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'status-pending': '#FBBF24',
+                        'status-delivered': '#10B981',
+                        'status-transit': '#3B82F6',
+                        'status-exception': '#EF4444',
+                        'status-cleared': '#1E3A8A',
+                    }
+                }
             }
         }
-        /* Ensure header takes full width on all devices without overflow */
-        .header {
-            width: 100%; /* Explicitly set width to 100% */
-            position: relative; /* Ensure absolute children are positioned correctly */
-            /* Added backdrop filter for frosted glass effect */
-            backdrop-filter: blur(8px); 
-            -webkit-backdrop-filter: blur(8px); /* For Safari support */
+    </script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom body background: Subtle gradient on a light canvas */
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+        }
+        
+        /* Timeline Styling */
+        .timeline-line {
+            width: 4px; /* Thicker line for visual weight */
+            background-color: #E5E7EB; 
+            position: absolute;
+            left: 17px; 
+            top: 0;
+            bottom: 0;
         }
 
-        /* Service Card Specific Enhancements */
-        .service-card {
-            border-bottom: 4px solid #007bff; /* Accent border at the bottom */
-            transition: all 0.3s ease;
+        /* Card Hover and Shadow Effect */
+        .tracking-result, .input-card {
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 10px 20px -5px rgba(30, 58, 138, 0.15);
         }
-        .service-card:hover {
-            border-bottom-color: #0056b3; /* Darker accent on hover */
-            transform: translateY(-5px); /* Lift effect */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+        .tracking-result:hover, .input-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(30, 58, 138, 0.3); /* Intense shadow on hover */
+            transform: translateY(-4px);
+        }
+
+        /* Map Placeholder Style - Dark and professional */
+        .map-placeholder {
+            background: #252e47; /* Dark background for professional map look */
+            background-image: radial-gradient(#394a6a 1px, transparent 0);
+            background-size: 25px 25px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #38BDF8;
+        }
+
+        /* Custom animation for map pin */
+        @keyframes pulse-pin {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pulse-pin {
+            animation: pulse-pin 2s infinite ease-in-out;
+        }
+
+        /* Modal Backdrop */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Loading Animation */
+        @keyframes rotating {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-fast {
+            animation: rotating 0.8s linear infinite;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased">
+<body class="font-sans min-h-screen">
 
-    <!-- Header & Navigation -->
-    <header class="bg-white bg-opacity-90 shadow-lg py-4 px-6 md:px-10 rounded-b-2xl sticky top-0 z-50 header">
-        <div class="container mx-auto flex justify-between items-center flex-wrap">
-            <!-- Logo - ZenithRoute -->
-            <a href="#" class="flex items-center text-3xl font-extrabold tracking-tight">
-                <span class="zenith-logo-text">ZenithRoute</span>
-                <span class="ml-2 text-blue-500">
-                    <i class="fas fa-route"></i> <!-- Simple route icon for the logo -->
-                </span>
-            </a>
-
-            <!-- Mobile Menu Toggle -->
-            <button id="navbar-toggle" class="md:hidden text-gray-700 focus:outline-none">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-
-            <!-- Navigation Menu -->
-            <!-- Initial state: hidden on mobile, flex row on md and up.
-                 JS will toggle 'hidden' and 'flex-col space-y-2' on mobile. -->
-            <nav id="navbar-menu" class="hidden md:flex md:flex-row md:items-center md:space-x-6 flex-grow justify-end">
-                <a href="#send" class="text-gray-700 hover:text-blue-600 font-semibold transition duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-blue-50 w-full md:w-auto text-center">Send a Parcel</a>
-                <a href="#track" class="text-gray-700 hover:text-blue-600 font-semibold transition duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-blue-50 w-full md:w-auto text-center">Track Shipment</a>
-                <a href="#services" class="text-gray-700 hover:text-blue-600 font-semibold transition duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-blue-50 w-full md:w-auto text-center">Services</a>
-                <a href="#about" class="text-gray-700 hover:text-blue-600 font-semibold transition duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-blue-50 w-full md:w-auto text-center">About Us</a>
-                <a href="#contact" class="text-gray-700 hover:text-blue-600 font-semibold transition duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-blue-50 w-full md:w-auto text-center">Contact</a>
-                <!-- New Links for future files -->
-                <a href="login.html" class="text-gray-700 hover:text-blue-600 font-semibold transition duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-blue-50 w-full md:w-auto text-center">Login</a>
-                <a href="signup.html" class="text-white bg-blue-600 hover:bg-blue-700 font-bold py-2 px-5 rounded-full transition duration-300 ease-in-out shadow-md w-full md:w-auto text-center">Sign Up</a>
-            </nav>
+    <header class="bg-primary text-white shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+            <h1 class="text-4xl font-black tracking-wider flex items-center">
+                <i data-lucide="route" class="h-8 w-8 mr-3 text-accent"></i> ZENITH ROUTE 
+                <span class="text-accent text-lg font-semibold ml-3 hidden sm:inline-block">ADVANCED LOGISTICS & COMPLIANCE</span>
+            </h1>
+            <div class="hidden sm:block">
+                <a href="#" class="text-secondary hover:text-accent px-4 py-2 rounded-lg text-lg font-medium transition duration-300">Support Center</a>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow container mx-auto p-4 md:p-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Tracking Input Card -->
+        <div class="input-card bg-white p-6 sm:p-12 rounded-3xl mb-16 border-t-4 border-accent">
+            <h2 class="text-4xl font-black text-primary mb-3">Global Consignment Visibility</h2>
+            <p class="text-gray-600 mb-8 text-xl">Enter your secure Consignment ID to access real-time status and manage critical regulatory clearance procedures.</p>
 
-        <!-- Hero Section -->
-        <section class="bg-blue-600 bg-opacity-80 text-white rounded-3xl p-8 md:p-16 text-center shadow-2xl mb-12 transform hover:scale-102 transition duration-500 ease-in-out" style="background: linear-gradient(135deg, #007bff, #00c6ff); animation: gradient-hero 10s ease infinite alternate; background-size: 200% 200%;">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in-down">Your Global Shipping Partner</h1>
-            <p class="text-lg md:text-xl font-light mb-8 animate-fade-in-up">Connecting continents, one parcel at a time. Fast, reliable, and secure.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#send" class="inline-block bg-white text-blue-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-300 ease-in-out animate-pop-in border-2 border-white">
-                    Get a Quote Now <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-                <a href="signup.html" class="inline-block bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-800 transform hover:scale-105 transition duration-300 ease-in-out animate-pop-in border-2 border-blue-700">
-                    Create Account <i class="fas fa-user-plus ml-2"></i>
-                </a>
-            </div>
-            <!-- Custom Keyframes for Hero Animations -->
-            <style>
-                @keyframes gradient-hero {
-                    0% { background-position: 0% 50%; }
-                    100% { background-position: 100% 50%; }
-                }
-                @keyframes fade-in-down {
-                    from { opacity: 0; transform: translateY(-20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                @keyframes fade-in-up {
-                    from { opacity: 0; transform: translateY(20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                @keyframes pop-in {
-                    from { opacity: 0; transform: scale(0.8); }
-                    to { opacity: 1; transform: scale(1); }
-                }
-            </style>
-        </section>
-
-        <!-- Send a Parcel Section -->
-        <section id="send" class="bg-white p-6 md:p-10 rounded-2xl shadow-xl mb-12 card-hover">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-700 mb-8"><i class="fas fa-paper-plane mr-3 text-blue-500"></i>Send a Parcel</h2>
-            <form id="quote-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="col-span-1">
-                    <label for="origin" class="block text-gray-700 text-sm font-bold mb-2">Origin Country:</label>
-                    <input type="text" id="origin" name="origin" list="country-suggestions-origin" placeholder="e.g., Nigeria" class="shadow-sm appearance-none border-2 border-gray-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:border-blue-500 focus:ring-blue-500 transition duration-200" required>
-                    <datalist id="country-suggestions-origin"></datalist>
-                </div>
-                <div class="col-span-1">
-                    <label for="destination" class="block text-gray-700 text-sm font-bold mb-2">Destination Country:</label>
-                    <input type="text" id="destination" name="destination" list="country-suggestions-destination" placeholder="e.g., Canada" class="shadow-sm appearance-none border-2 border-gray-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:border-blue-500 focus:ring-blue-500 transition duration-200" required>
-                    <datalist id="country-suggestions-destination"></datalist>
-                </div>
-                <div class="col-span-1">
-                    <label for="weight" class="block text-gray-700 text-sm font-bold mb-2">Weight (kg):</label>
-                    <input type="number" id="weight" name="weight" placeholder="e.g., 5" min="0.1" step="0.1" class="shadow-sm appearance-none border-2 border-gray-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:border-blue-500 focus:ring-blue-500 transition duration-200" required>
-                </div>
-                <div class="col-span-1">
-                    <label for="dimensions" class="block text-gray-700 text-sm font-bold mb-2">Dimensions (LxWxH cm):</label>
-                    <input type="text" id="dimensions" name="dimensions" placeholder="e.g., 20x15x10 (approx)" class="shadow-sm appearance-none border-2 border-gray-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:border-blue-500 focus:ring-blue-500 transition duration-200" required>
-                </div>
-                <div class="col-span-full flex flex-col sm:flex-row justify-center gap-4 mt-6">
-                    <button type="submit" id="get-quote-btn" class="btn-primary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 flex items-center justify-center">
-                        <i class="fas fa-calculator mr-2"></i>Get a Quote
-                    </button>
-                    <button type="button" id="clear-quote-form-btn" class="btn-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 flex items-center justify-center">
-                        <i class="fas fa-redo mr-2"></i>Clear Form
-                    </button>
-                </div>
-            </form>
-            <p id="quote-message" class="text-center mt-6 text-lg text-gray-600 hidden"></p>
-        </section>
-
-        <!-- Track Your Shipment Section -->
-        <section id="track" class="bg-white p-6 md:p-10 rounded-2xl shadow-xl mb-12 card-hover">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-700 mb-8"><i class="fas fa-truck-fast mr-3 text-blue-500"></i>Track Your Shipment</h2>
-            <div class="max-w-md mx-auto">
-                <label for="tracking-number" class="block text-gray-700 text-sm font-bold mb-2 text-left">Tracking Number:</label>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <input type="text" id="tracking-number" name="tracking-number" placeholder="Enter your tracking number (e.g., ZR123456789)" class="shadow-sm appearance-none border-2 border-gray-200 rounded-lg flex-grow py-3 px-4 text-gray-700 leading-tight focus:border-blue-500 focus:ring-blue-500 transition duration-200">
-                    <button type="button" id="track-button" class="btn-primary text-white font-bold py-3 px-6 rounded-full shadow-lg hover:scale-105 flex-shrink-0 flex items-center justify-center">
-                        <i class="fas fa-magnifying-glass mr-2"></i>Track
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Map Canvas for Live Tracking Simulation -->
-            <canvas id="tracking-map-canvas"></canvas>
-
-            <div id="tracking-results" class="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200 hidden">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Shipment Status for <span id="display-tracking-number"></span>:</h3>
-                <p class="text-gray-700 mb-2"><strong class="text-blue-600">Status:</strong> <span id="shipment-status"></span></p>
-                <p class="text-700 mb-2"><strong class="text-blue-600">Last Location:</strong> <span id="shipment-location"></span></p>
-                <p class="text-gray-700 mb-2"><strong class="text-blue-600">Estimated Delivery:</strong> <span id="shipment-eta"></span></p>
-                <p class="text-gray-700 mb-2"><strong class="text-blue-600">Miles Remaining:</strong> <span id="miles-remaining">N/A</span></p>
-                <p class="text-gray-700 mb-2"><strong class="text-blue-600">Journey Progress:</strong> <span id="journey-progress">N/A</span></p>
-                <!-- NEW: Next Major Stop and Distance to Next Stop -->
-                <p class="text-gray-700 mb-2"><strong class="text-blue-600">Next Major Stop:</strong> <span id="next-major-stop">N/A</span></p>
-                <p class="text-gray-700 mb-2"><strong class="text-blue-600">Distance to Next Stop:</strong> <span id="distance-to-next-stop">N/A</span></p>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services" class="bg-white p-6 md:p-10 rounded-2xl shadow-xl mb-12 card-hover">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-700 mb-8"><i class="fas fa-box mr-3 text-blue-500"></i>Our Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center p-6 bg-blue-50 rounded-lg shadow-md hover:shadow-lg service-card">
-                    <i class="fas fa-plane-departure text-5xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Air Freight</h3>
-                    <p class="text-gray-600">Fastest delivery for urgent and time-sensitive shipments across the globe.</p>
-                </div>
-                <div class="text-center p-6 bg-blue-50 rounded-lg shadow-md hover:shadow-lg service-card">
-                    <i class="fas fa-ship text-5xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Ocean Freight</h3>
-                    <p class="text-gray-600">Cost-effective solutions for large volume and heavy cargo international shipping.</p>
-                </div>
-                <div class="text-center p-6 bg-blue-50 rounded-lg shadow-md hover:shadow-lg service-card">
-                    <i class="fas fa-truck text-5xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Land Transport</h3>
-                    <p class="text-gray-600">Reliable domestic and cross-border trucking for flexible delivery needs.</p>
-                </div>
-                <div class="text-center p-6 bg-blue-50 rounded-lg shadow-md hover:shadow-lg service-card">
-                    <i class="fas fa-hand-holding-box text-5xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Warehousing</h3>
-                    <p class="text-gray-600">Secure storage and efficient inventory management solutions worldwide.</p>
-                </div>
-                <div class="text-center p-6 bg-blue-50 rounded-lg shadow-md hover:shadow-lg service-card">
-                    <i class="fas fa-shield-alt text-5xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Cargo Insurance</h3>
-                    <p class="text-gray-600">Protect your valuable shipments against unforeseen risks with comprehensive coverage.</p>
-                </div>
-                <div class="text-center p-6 bg-blue-50 rounded-lg shadow-md hover:shadow-lg service-card">
-                    <i class="fas fa-users-cog text-5xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Customs Brokerage</h3>
-                    <p class="text-gray-600">Navigate international customs regulations with our expert guidance.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Us Section -->
-        <section id="about" class="bg-white p-6 md:p-10 rounded-2xl shadow-xl mb-12 card-hover">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-700 mb-8"><i class="fas fa-building mr-3 text-blue-500"></i>About ZenithRoute</h2>
-            <div class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                <p class="mb-4">At <strong>ZenithRoute</strong>, we are committed to redefining global logistics. With years of expertise and a vast network, we provide seamless, efficient, and reliable shipping solutions to individuals and businesses worldwide.</p>
-                <p class="mb-4">Our mission is to simplify international trade, offering transparent tracking, competitive rates, and exceptional customer service. We believe every parcel has a story, and we ensure it reaches its destination safely and on time.</p>
-                <p>Choose ZenithRoute for a journey that's not just about delivery, but about trust and peace of mind.</p>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="bg-white p-6 md:p-10 rounded-2xl shadow-xl mb-12 card-hover">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-blue-700 mb-8"><i class="fas fa-headset mr-3 text-blue-500"></i>Contact Us</h2>
-            <div class="max-w-xl mx-auto text-center">
-                <p class="text-lg text-gray-700 mb-6">Have questions or need assistance? Reach out to our team!</p>
-                <div class="space-y-4 mb-8">
-                    <p class="flex items-center justify-center text-gray-800"><i class="fas fa-envelope mr-3 text-blue-500"></i> <a href="mailto:info@zenithroute.com" class="text-blue-600 hover:underline">info@zenithroute.com</a></p>
-                    <p class="flex items-center justify-center text-gray-800"><i class="fas fa-phone mr-3 text-blue-500"></i> +1 (555) 123-4567</p>
-                    <p class="flex items-center justify-center text-gray-800"><i class="fas fa-map-marker-alt mr-3 text-blue-500"></i> 123 Global Shipping Lane, World City, Earth</p>
-                </div>
-                <form id="contact-form" class="space-y-4">
-                    <div>
-                        <input type="text" id="contact-name" placeholder="Your Name" class="shadow-sm appearance-none border-2 border-gray-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:border-blue-500 focus:ring-blue-500 transition duration-200" required>
-                    </div>
-                    <div>
-                        <input type="email" id="contact-email" placeholder="Your Email" class="shadow-sm appearance-none border-2 border-gray-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:border-blue-500 focus:ring-blue-500 transition duration-200" required>
-                    </div>
-                    <div>
-                        <textarea id="contact-message" rows="5" placeholder="Your Message" class="shadow-sm appearance-none border-2 border-gray-200 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:border-blue-500 focus:ring-blue-500 transition duration-200" required></textarea>
-                    </div>
-                    <div>
-                        <button type="submit" id="send-message-btn" class="btn-primary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 flex items-center justify-center mx-auto">
-                            <i class="fas fa-paper-plane mr-2"></i>Send Message
-                        </button>
-                    </div>
-                </form>
-                <p id="contact-status-message" class="text-center mt-4 hidden"></p>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-6 px-4 md:px-10 rounded-t-2xl shadow-inner text-center">
-        <div class="container mx-auto">
-            <p>&copy; 2025 ZenithRoute. All rights reserved.</p>
-            <div class="flex justify-center space-x-6 mt-4">
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f text-xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter text-xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in text-xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram text-xl"></i></a>
+            <div class="flex flex-col sm:flex-row gap-5">
+                <input
+                    type="text"
+                    id="trackingInput"
+                    placeholder="Enter Consignment ID (e.g., ZEN123456789 or ZRC33334)"
+                    class="flex-grow p-5 border-2 border-gray-300 rounded-xl focus:ring-accent focus:border-accent text-xl transition duration-200 ease-in-out shadow-lg placeholder-gray-400"
+                >
+                <button
+                    onclick="trackShipment()"
+                    class="w-full sm:w-64 px-8 py-5 bg-primary text-white font-extrabold rounded-xl shadow-2xl hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-accent/50 transition duration-300 text-xl transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center"
+                >
+                    <i data-lucide="radar" class="h-6 w-6 mr-2"></i> Initiate Search
+                </button>
             </div>
         </div>
-    </footer>
+
+        <!-- Results Display Area -->
+        <div id="resultsContainer">
+            <div id="initialMessage" class="text-center p-20 bg-white rounded-3xl shadow-xl border-2 border-dashed border-accent/50 transform scale-[0.98] opacity-90 transition duration-500">
+                <i data-lucide="package-search" class="mx-auto h-24 w-24 text-accent mb-4"></i>
+                <h3 class="mt-4 text-4xl font-bold text-gray-900">Awaiting Consignment Input</h3>
+                <p class="mt-2 text-xl text-gray-500">Your route to seamless global trade management starts with a valid tracking ID.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Customs Clearance Payment Modal -->
+    <div id="clearanceModal" class="fixed inset-0 hidden z-50 overflow-y-auto modal-backdrop" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen p-4 text-center sm:p-0">
+            <!-- Modal panel -->
+            <div class="relative bg-white rounded-3xl text-left overflow-hidden shadow-4xl transform transition-all sm:my-8 sm:max-w-2xl sm:w-full border-t-8 border-warning">
+                <div class="bg-white p-8 sm:p-10">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-16 w-16 rounded-full bg-warning/10 sm:mx-0 sm:h-14 sm:w-14">
+                            <i data-lucide="alert-octagon" class="h-8 w-8 text-warning"></i>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-6 sm:text-left w-full">
+                            <h3 class="text-3xl leading-6 font-extrabold text-gray-900" id="modal-title">
+                                Regulatory Compliance & Fee Settlement
+                            </h3>
+                            <p id="modal-tracking-number" class="text-lg text-gray-500 mt-2 font-medium"></p>
+                            <p class="text-sm text-danger mt-1">Status: Consignment is on Regulatory Hold. Immediate action required for release.</p>
+                            
+                            <div class="mt-8">
+                                <div id="modal-cost-info" class="p-5 bg-secondary rounded-xl font-black text-2xl text-primary text-center mb-6 shadow-inner"></div>
+                                
+                                <h4 class="text-xl font-bold text-gray-700 mb-4 border-b-2 pb-2 border-accent/50">Mandatory Release Protocols:</h4>
+                                <div id="modal-actions-container" class="space-y-6">
+                                    <!-- Dynamic action buttons will be injected here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-5 sm:flex sm:flex-row-reverse rounded-b-3xl">
+                    <button type="button" onclick="closeClearanceModal()" class="w-full inline-flex justify-center rounded-xl border-2 border-gray-300 shadow-md px-6 py-3 bg-white text-lg font-semibold text-gray-700 hover:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto transition duration-200">
+                        Close Portal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- Helper Functions for UI Feedback ---
-            function showLoading(button, originalText, iconClass) {
-                button.dataset.originalText = originalText;
-                button.dataset.originalIconClass = iconClass;
-                button.innerHTML = `<span class="spinner mr-2"></span>Loading...`;
-                button.disabled = true;
+        // --- FIREBASE PLACEHOLDERS (Required for environment, even if not used) ---
+        const __app_id = 'zenith-route-v5';
+        const __firebase_config = '{}';
+        const __initial_auth_token = 'mock-auth-token';
+
+        // --- USER-PROVIDED TEST KEY ---
+        const TEST_PAYMENT_KEY = 'pk_test_cdbf17939cecdf30d94efbaad720a7e4fe2564ed';
+
+
+        // --- MOCK DATABASE (Updated with professional data and volumetric weight) ---
+        let MOCK_SHIPMENTS = [
+            // In Transit - Clear
+            {
+                trackingNumber: 'ZEN123456789',
+                status: 'In Transit',
+                statusKey: 'status-transit',
+                senderName: 'TechGlobal Inc. (SHZ)',
+                receiverName: 'Alice Johnson (NYC)',
+                origin: 'Shenzhen, China',
+                destination: 'New York, USA',
+                estimatedDelivery: '2025-11-05',
+                service: 'Premium Air Express',
+                weight: '2.5 kg',
+                volumetricWeight: '4.8 kg',
+                currentGeo: { lat: 35.15, lng: -90.0, location: 'Memphis, TN' }, 
+                isClearanceNeeded: false,
+                customsInfo: { cost: 0, documentsRequired: false, isPaid: true, isDocumentsSubmitted: true },
+                receivedBy: null,
+                history: [
+                    { date: '10/29', time: '09:30 AM', location: 'Memphis, TN', description: 'Arrived at Regional Sortation Hub. Processing in progress.' },
+                    { date: '10/28', time: '11:00 PM', location: 'Anchorage, AK', description: 'Departed Transit Air Freight Terminal.' },
+                ]
+            },
+            // Delivered - Awaiting Recipient Confirmation
+            {
+                trackingNumber: 'ZRC987654321',
+                status: 'Delivered',
+                statusKey: 'status-delivered',
+                senderName: 'Bookworm Publishers (LDN)',
+                receiverName: 'Robert Smith (CHI)',
+                origin: 'London, UK',
+                destination: 'Chicago, USA',
+                estimatedDelivery: '2025-10-20',
+                service: 'Standard Ground Freight',
+                weight: '15.0 kg',
+                volumetricWeight: '12.0 kg',
+                currentGeo: { lat: 41.87, lng: -87.62, location: 'Chicago, IL' },
+                isClearanceNeeded: false,
+                customsInfo: { cost: 0, documentsRequired: false, isPaid: true, isDocumentsSubmitted: true },
+                receivedBy: null, 
+                history: [
+                    { date: '10/20', time: '02:15 PM', location: 'Chicago, IL', description: 'Delivery confirmed and finalized by courier.' },
+                    { date: '10/20', time: '08:00 AM', location: 'Chicago, IL', description: 'Outbound for final mile delivery attempt.' },
+                ]
+            },
+            // Awaiting Clearance - NEEDS PAYMENT & DOCUMENTS
+            {
+                trackingNumber: 'ZRC33334',
+                status: 'Awaiting Clearance',
+                statusKey: 'status-pending',
+                senderName: 'Nippon Electronics (TYO)',
+                receiverName: 'Zenith HQ (LAX)',
+                origin: 'Tokyo, Japan',
+                destination: 'Los Angeles, USA',
+                estimatedDelivery: '2025-11-03',
+                service: 'Ocean Cargo Express',
+                weight: '150.0 kg',
+                volumetricWeight: '210.5 kg',
+                currentGeo: { lat: 33.7, lng: -118.2, location: 'Port of Los Angeles, CA' },
+                isClearanceNeeded: true, 
+                customsInfo: { cost: 250.75, documentsRequired: true, isPaid: false, isDocumentsSubmitted: false },
+                receivedBy: null,
+                history: [
+                    { date: '10/29', time: '07:00 AM', location: 'LA Port Authority', description: 'Consignment docked. Regulatory payment and documentation submission required for immediate release.' },
+                    { date: '10/20', time: '11:00 PM', location: 'Tokyo Port', description: 'Shipment loaded onto vessel, departed origin port.' },
+                ]
             }
+        ];
 
-            function hideLoading(button) {
-                button.innerHTML = `<i class="${button.dataset.originalIconClass} mr-2"></i>${button.dataset.originalText}`;
-                button.disabled = false;
+        const resultsContainer = document.getElementById('resultsContainer');
+        const clearanceModal = document.getElementById('clearanceModal');
+
+        /**
+         * Converts the status key into Tailwind classes for styling.
+         */
+        function getStatusClasses(statusKey) {
+            switch (statusKey) {
+                case 'status-delivered':
+                    return 'bg-success text-white';
+                case 'status-transit':
+                    return 'bg-info text-white';
+                case 'status-exception':
+                    return 'bg-danger text-white';
+                case 'status-pending':
+                    return 'bg-warning text-gray-800';
+                default: 
+                    return 'bg-status-cleared text-white';
             }
+        }
 
-            function displayMessage(elementId, message, type = 'info') {
-                const element = document.getElementById(elementId);
-                if (element) {
-                    element.textContent = message;
-                    element.classList.remove('hidden', 'text-green-600', 'text-red-600', 'text-gray-600');
-                    if (type === 'success') {
-                        element.classList.add('text-green-600', 'font-bold');
-                    } else if (type === 'error') {
-                        element.classList.add('text-red-600', 'font-bold');
-                    } else {
-                        element.classList.add('text-gray-600');
-                    }
-                }
+        /**
+         * Utility to display a temporary notification message.
+         */
+        function displayTemporaryMessage(title, message, color = 'success') {
+            const successBox = document.createElement('div');
+            successBox.className = `fixed top-6 right-6 p-5 rounded-xl shadow-2xl text-white bg-${color} z-50 transform transition duration-500 ease-out translate-x-0 opacity-100`;
+            successBox.innerHTML = `<p class="font-bold text-lg">${title}</p><p class="text-sm">${message}</p>`;
+            document.body.appendChild(successBox);
+
+            setTimeout(() => {
+                successBox.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => successBox.remove(), 500);
+            }, 5000);
+        }
+
+        /**
+         * Recipient action: Marks a delivered shipment as received.
+         */
+        function confirmReceipt(trackingNumber) {
+            const shipmentIndex = MOCK_SHIPMENTS.findIndex(s => s.trackingNumber === trackingNumber);
+            if (shipmentIndex > -1) {
+                MOCK_SHIPMENTS[shipmentIndex].receivedBy = "Recipient Confirmed";
+                const shipment = MOCK_SHIPMENTS[shipmentIndex];
+                resultsContainer.innerHTML = renderShipmentResult(shipment);
+                lucide.createIcons();
+                displayTemporaryMessage("Confirmation Registered", `Consignment ${trackingNumber} receipt confirmed by receiver. Record finalized.`);
             }
+        }
+        
+        // --- CUSTOMS CLEARANCE FUNCTIONS ---
 
-            // --- Smooth scrolling for navigation links ---
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    // Close mobile menu if open
-                    const navbarMenu = document.getElementById('navbar-menu');
-                    // Check if it's a mobile view before trying to hide
-                    if (window.innerWidth <= 768 && !navbarMenu.classList.contains('hidden')) {
-                        navbarMenu.classList.add('hidden');
-                        navbarMenu.classList.remove('flex', 'flex-col', 'space-y-2');
-                    }
-                });
-            });
+        /**
+         * Opens the detailed Customs Clearance Modal.
+         */
+        function openClearanceModal(trackingNumber) {
+            const shipment = MOCK_SHIPMENTS.find(s => s.trackingNumber === trackingNumber);
+            if (!shipment || !shipment.isClearanceNeeded) return;
 
-            // --- Mobile Navbar Toggle ---
-            const navbarToggle = document.getElementById('navbar-toggle');
-            const navbarMenu = document.getElementById('navbar-menu');
+            document.getElementById('modal-tracking-number').textContent = `Consignment ID: ${trackingNumber}`;
             
-            if (navbarToggle && navbarMenu) {
-                navbarToggle.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent this click from bubbling to document and closing immediately
-                    
-                    // Toggle visibility
-                    navbarMenu.classList.toggle('hidden');
-                    
-                    // Adjust flex direction and spacing based on visibility
-                    if (!navbarMenu.classList.contains('hidden')) {
-                        // Menu is now visible (mobile view)
-                        navbarMenu.classList.add('flex', 'flex-col', 'space-y-2');
-                        navbarMenu.classList.remove('md:flex-row', 'md:space-x-6'); // Ensure desktop classes are off
-                    } else {
-                        // Menu is now hidden (mobile view)
-                        navbarMenu.classList.remove('flex', 'flex-col', 'space-y-2');
-                    }
-                });
+            const costText = shipment.customsInfo.isPaid 
+                ? 'COMPLIANCE STATUS: DUTIES AND TAXES SETTLED'
+                : `TOTAL REGULATORY FEES DUE: $${shipment.customsInfo.cost.toFixed(2)}`;
+            document.getElementById('modal-cost-info').innerHTML = costText;
 
-                // Close nav menu when clicking outside (on mobile)
-                document.addEventListener('click', (event) => {
-                    if (window.innerWidth <= 768 && !navbarMenu.classList.contains('hidden') && 
-                        !navbarMenu.contains(event.target) && 
-                        !navbarToggle.contains(event.target)) {
-                        navbarMenu.classList.add('hidden');
-                        navbarMenu.classList.remove('flex', 'flex-col', 'space-y-2');
-                    }
-                });
+            renderClearanceActions(shipment);
+            clearanceModal.classList.remove('hidden');
+        }
 
-                // Close nav menu when a link is clicked
-                navbarMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (window.innerWidth <= 768 && !navbarMenu.classList.contains('hidden')) {
-                            navbarMenu.classList.add('hidden');
-                            navbarMenu.classList.remove('flex', 'flex-col', 'space-y-2');
-                        }
-                    });
-                });
+        /**
+         * Closes the Customs Clearance Modal.
+         */
+        function closeClearanceModal() {
+            clearanceModal.classList.add('hidden');
+        }
 
-                // Handle resize events to switch between mobile/desktop menu states
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 768) {
-                        // Desktop view: ensure menu is always visible and horizontal
-                        navbarMenu.classList.remove('hidden', 'flex-col', 'space-y-2');
-                        navbarMenu.classList.add('flex', 'flex-row', 'space-x-6');
-                    } else {
-                        // Mobile view: ensure menu is hidden by default and ready for vertical stacking
-                        navbarMenu.classList.add('hidden'); // Always hide on resize to mobile
-                        navbarMenu.classList.remove('flex', 'flex-row', 'space-x-6');
-                        navbarMenu.classList.remove('flex-col', 'space-y-2'); // Remove mobile specific classes, they'll be added on toggle
-                    }
-                });
+        /**
+         * Renders the action buttons inside the clearance modal based on current status.
+         */
+        function renderClearanceActions(shipment) {
+            const actionsContainer = document.getElementById('modal-actions-container');
+            let html = '';
+
+            // 1. Document Submission Step
+            if (shipment.customsInfo.documentsRequired && !shipment.customsInfo.isDocumentsSubmitted) {
+                html += `
+                    <div class="flex items-center p-4 border rounded-xl shadow-sm bg-accent/10">
+                        <i data-lucide="upload-cloud" class="h-6 w-6 text-primary mr-4 flex-shrink-0"></i>
+                        <div class="flex-grow">
+                            <p class="font-medium text-gray-700">Submit Required Trade Documentation</p>
+                            <p class="text-xs text-gray-500">Commercial Invoice, KYC/ID Verification</p>
+                        </div>
+                        <button onclick="simulateClearanceAction('${shipment.trackingNumber}', 'documents')" class="ml-4 px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/80 transition">
+                            Submit Documents
+                        </button>
+                    </div>
+                `;
+            } else if (shipment.customsInfo.documentsRequired) {
+                 html += `
+                    <div class="flex items-center p-4 border border-success/50 bg-green-50 rounded-xl shadow-inner">
+                        <i data-lucide="check-circle" class="h-6 w-6 text-success mr-4 flex-shrink-0"></i>
+                        <p class="flex-grow font-medium text-success">Documentation Verified and Approved</p>
+                    </div>
+                `;
             }
 
-            // --- Send a Parcel: Get Quote Logic ---
-            const sendParcelForm = document.getElementById('quote-form');
-            const getQuoteBtn = document.getElementById('get-quote-btn');
-            const clearQuoteFormBtn = document.getElementById('clear-quote-form-btn');
-            const quoteMessage = document.getElementById('quote-message');
-            const originInput = document.getElementById('origin');
-            const destinationInput = document.getElementById('destination');
-            const weightInput = document.getElementById('weight');
-            const dimensionsInput = document.getElementById('dimensions');
-
-            const countries = [
-                "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
-                "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
-                "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
-                "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Brazzaville)", "Congo (Kinshasa)",
-                "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador",
-                "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France",
-                "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau",
-                "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland",
-                "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan",
-                "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar",
-                "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
-                "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal",
-                "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan",
-                "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
-                "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
-                "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
-                "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan",
-                "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
-                "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
-                "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-            ];
-
-            function populateDatalist(inputElement, datalistId) {
-                const datalist = document.getElementById(datalistId);
-                datalist.innerHTML = ''; // Clear existing options
-                countries.forEach(country => {
-                    const option = document.createElement('option');
-                    option.value = country;
-                    datalist.appendChild(option);
-                });
+            // 2. Payment Step - Now with a loading state simulation
+            if (!shipment.customsInfo.isPaid) {
+                html += `
+                    <div class="flex items-center p-4 border rounded-xl shadow-sm bg-warning/10">
+                        <i data-lucide="credit-card" class="h-6 w-6 text-warning mr-4 flex-shrink-0"></i>
+                        <div class="flex-grow">
+                            <p class="font-medium text-gray-700">Settle Regulatory Duties and Taxes</p>
+                            <p class="text-xs text-gray-500">Payment Gateway: Zenith Secure (Key: ${TEST_PAYMENT_KEY.substring(0, 10)}...)</p>
+                        </div>
+                        <button id="payButton_${shipment.trackingNumber}" onclick="simulateClearanceAction('${shipment.trackingNumber}', 'payment')" class="ml-4 px-4 py-2 bg-warning text-white text-sm font-semibold rounded-lg shadow-lg hover:bg-warning/90 transition">
+                            Pay $${shipment.customsInfo.cost.toFixed(2)}
+                        </button>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="flex items-center p-4 border border-success/50 bg-green-50 rounded-xl shadow-inner">
+                        <i data-lucide="check-circle" class="h-6 w-6 text-success mr-4 flex-shrink-0"></i>
+                        <p class="flex-grow font-medium text-success">Financial Obligations Fulfilled</p>
+                    </div>
+                `;
             }
 
-            populateDatalist(originInput, 'country-suggestions-origin');
-            populateDatalist(destinationInput, 'country-suggestions-destination');
+            actionsContainer.innerHTML = html;
+            lucide.createIcons();
+        }
 
+        /**
+         * Simulates a single action (payment or document submission) and checks for final clearance.
+         */
+        function simulateClearanceAction(trackingNumber, actionType) {
+            const shipmentIndex = MOCK_SHIPMENTS.findIndex(s => s.trackingNumber === trackingNumber);
+            if (shipmentIndex === -1) return;
 
-            sendParcelForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                showLoading(getQuoteBtn, 'Get a Quote', 'fas fa-calculator');
+            let shipment = MOCK_SHIPMENTS[shipmentIndex];
+            const payButton = document.getElementById(`payButton_${trackingNumber}`);
 
-                const origin = originInput.value.trim();
-                const destination = destinationInput.value.trim();
-                const weight = parseFloat(weightInput.value);
-                const dimensions = dimensionsInput.value.trim(); // "LxWxH"
+            if (actionType === 'payment') {
+                if(payButton) {
+                    payButton.innerHTML = `<i data-lucide="loader-circle" class="h-5 w-5 animate-spin-fast"></i> Processing...`;
+                    payButton.disabled = true;
+                    
+                    // Simulate payment processing delay
+                    setTimeout(() => {
+                        shipment.customsInfo.isPaid = true;
+                        displayTemporaryMessage("Payment Successful", `Transaction approved via Zenith Secure Gateway. Key: ${TEST_PAYMENT_KEY.substring(0, 10)}...`, 'info');
+                        
+                        // Check for final clearance after simulated payment
+                        checkAndFinalizeClearance(shipment, trackingNumber);
 
-                // Basic validation
-                if (!origin || !destination || isNaN(weight) || weight <= 0 || !dimensions) {
-                    displayMessage('quote-message', 'Please fill in all parcel details correctly.', 'error');
-                    hideLoading(getQuoteBtn);
-                    return;
+                    }, 2500); // 2.5 second delay for realism
                 }
 
-                // Simulate processing time
+            } else if (actionType === 'documents') {
+                shipment.customsInfo.isDocumentsSubmitted = true;
+                displayTemporaryMessage("Documentation Submitted", `Trade documents received and queued for customs validation.`, 'info');
+                
+                // Check for final clearance immediately after document submission (assuming instant validation for mock)
+                checkAndFinalizeClearance(shipment, trackingNumber);
+            }
+        }
+
+        /**
+         * Checks if all clearance conditions are met and finalizes the shipment status.
+         */
+        function checkAndFinalizeClearance(shipment, trackingNumber) {
+            // Re-render modal to update statuses
+            renderClearanceActions(shipment);
+            
+            if (shipment.customsInfo.isPaid && (!shipment.customsInfo.documentsRequired || shipment.customsInfo.isDocumentsSubmitted)) {
+                
+                // Update final clearance status
+                shipment.isClearanceNeeded = false;
+                shipment.status = "Cleared, En Route to Destination";
+                shipment.statusKey = "status-cleared";
+                
+                // Add a new event to the history
+                const date = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
+                const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                shipment.history.unshift({
+                    date: date,
+                    time: time,
+                    location: shipment.currentGeo.location,
+                    description: 'Customs Clearance Complete! Shipment released and routed for final delivery scheduling.'
+                });
+
+                // Close modal and re-render the main tracking page
                 setTimeout(() => {
-                    // Simple quote calculation: Base + weight * factor + (dimension sum) * factor
-                    const baseCost = 5000; // Base cost in Naira
-                    const weightCost = weight * 1000; // ₦1000 per kg
+                    closeClearanceModal();
+                    resultsContainer.innerHTML = renderShipmentResult(shipment);
+                    lucide.createIcons();
+                    displayTemporaryMessage("Regulatory Release Granted", `Consignment ${trackingNumber} has been officially cleared and is moving to delivery.`, 'success');
+                }, 100);
+            }
+        }
+        
+        /**
+         * Renders a simulated map display for the current location.
+         */
+        function renderMap(geo) {
+            const latPercent = ((geo.lat + 90) / 180) * 100; // Normalized latitude (0-100)
+            const lngPercent = ((geo.lng + 180) / 360) * 100; // Normalized longitude (0-100)
 
-                    let dimCost = 0;
-                    const dimParts = dimensions.split('x').map(Number);
-                    if (dimParts.length === 3 && dimParts.every(d => !isNaN(d) && d > 0)) {
-                        dimCost = (dimParts[0] + dimParts[1] + dimParts[2]) * 50; // ₦50 per cm sum
-                    } else {
-                        // Fallback if dimensions format is incorrect, apply a default small fee
-                        dimCost = 200; 
-                    }
+            return `
+                <div class="w-full h-80 map-placeholder rounded-2xl shadow-xl relative mb-6">
+                    <!-- Stylized Globe/Route lines -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-2/3 h-2/3 border-4 border-dashed border-accent/40 rounded-full animate-spin-slow"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-accent text-3xl font-black italic opacity-10">ZENITH ROUTE</div>
+                    </div>
+
+                    <!-- Current Location Marker -->
+                    <div class="absolute p-3 bg-accent rounded-full shadow-2xl border-4 border-white animate-pulse-pin" 
+                         style="top: calc(${100 - latPercent}% - 16px); left: calc(${lngPercent}% - 16px);"
+                         title="Current Location: ${geo.location}">
+                        <i data-lucide="locate-fixed" class="h-6 w-6 text-primary"></i>
+                    </div>
+
+                    <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm p-3 rounded-lg text-lg font-bold text-gray-800 shadow-xl border border-accent/50">
+                        <i data-lucide="map-pin" class="h-5 w-5 inline mr-2 text-primary"></i> Current Location: ${geo.location}
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the HTML template for a single tracking result.
+         */
+        function renderShipmentResult(shipment) {
+            const statusClasses = getStatusClasses(shipment.statusKey);
+            const currentGeo = shipment.currentGeo;
+
+            // --- Clearance/Goods Management Block ---
+            let clearanceActionBlock = '';
+            if (shipment.isClearanceNeeded) {
+                clearanceActionBlock = `
+                    <div class="p-8 bg-warning/10 border-l-8 border-warning rounded-2xl shadow-2xl mb-12 transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="gavel" class="h-7 w-7 text-warning mr-4"></i>
+                            <h4 class="text-2xl font-bold text-gray-800">Regulatory Hold Initiated</h4>
+                        </div>
+                        <p class="text-gray-600 mb-6 text-base">This consignment requires immediate **Regulatory Compliance & Fee Settlement** for release from Customs. Proceed to the portal to submit documentation and duty payments.</p>
+                        <button onclick="openClearanceModal('${shipment.trackingNumber}')" class="w-full sm:w-80 px-8 py-4 bg-warning text-white font-semibold rounded-xl shadow-lg hover:bg-warning/90 focus:ring-4 focus:ring-warning/50 transition duration-150 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center">
+                            <i data-lucide="file-check-2" class="h-5 w-5 inline mr-3"></i> Access Compliance Portal
+                        </button>
+                    </div>
+                `;
+            }
+
+            // --- Recipient Status/Confirmation Block ---
+            let recipientActionBlock = '';
+            if (shipment.statusKey === 'status-delivered' && !shipment.receivedBy) {
+                recipientActionBlock = `
+                    <div class="p-8 bg-success/10 border-l-8 border-success rounded-2xl shadow-2xl mb-12 transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <i data-lucide="package-check" class="h-7 w-7 text-success mr-4"></i>
+                            <h4 class="text-2xl font-bold text-gray-800">Final Delivery Confirmation</h4>
+                        </div>
+                        <p class="text-gray-600 mb-6 text-base">The physical delivery has been recorded. Please confirm receipt to finalize the transit record and authorize final closure of the Consignment ID.</p>
+                        <button onclick="confirmReceipt('${shipment.trackingNumber}')" class="w-full sm:w-80 px-8 py-4 bg-success text-white font-semibold rounded-xl shadow-lg hover:bg-success/90 focus:ring-4 focus:ring-success/50 transition duration-150 transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center">
+                            <i data-lucide="handshake" class="h-5 w-5 inline mr-3"></i> Confirm Physical Receipt
+                        </button>
+                    </div>
+                `;
+            } else if (shipment.receivedBy) {
+                 recipientActionBlock = `
+                    <div class="p-5 bg-green-100 border border-success/50 rounded-xl shadow-inner mb-12 text-center">
+                         <p class="text-xl font-extrabold text-success flex items-center justify-center">
+                            <i data-lucide="bookmark-check" class="h-6 w-6 mr-3"></i> TRANSIT RECORD CLOSED: DELIVERED & CONFIRMED
+                         </p>
+                         <p class="text-sm text-gray-700 mt-1">Finalized by Consignee: ${shipment.receiverName}</p>
+                    </div>
+                `;
+            }
+
+            // Generate the timeline history HTML
+            const historyHtml = shipment.history.map((event, index) => {
+                const isLatest = index === 0;
+                const dotColor = isLatest ? 'bg-accent ring-4 ring-primary/30' : 'bg-gray-400';
+                const textColor = isLatest ? 'font-bold text-gray-900' : 'text-gray-600';
+
+                return `
+                    <li class="relative pb-8 pl-10">
+                        <!-- Timeline Pin/Dot -->
+                        <div class="absolute top-0 left-0 w-8 h-8 flex items-center justify-center">
+                            <span class="w-5 h-5 rounded-full ${dotColor} z-10 ${isLatest ? 'animate-pulse' : ''}"></span>
+                        </div>
+                        <div class="ml-4 p-5 rounded-xl bg-white hover:bg-gray-50 transition duration-150 ease-in-out shadow-lg border-l-4 border-primary/20">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 border-b border-dashed pb-2">
+                                <p class="text-xs font-bold text-primary uppercase tracking-widest flex items-center">
+                                    <i data-lucide="clock" class="h-3 w-3 mr-1"></i> ${event.date} / ${event.time}
+                                </p>
+                                <p class="text-sm text-gray-500 font-medium mt-1 sm:mt-0 flex items-center">
+                                    <i data-lucide="send" class="h-4 w-4 mr-1"></i> ${event.location}
+                                </p>
+                            </div>
+                            <p class="${textColor} text-base">${event.description}</p>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+
+            // Assemble the main result card
+            const resultHtml = `
+                <div class="tracking-result bg-white p-6 sm:p-12 rounded-3xl border-t-4 border-primary">
                     
-                    // Add a distance factor based on country name lengths (very basic simulation)
-                    const distanceFactor = (origin.length + destination.length) * 100;
+                    <!-- Header and Status -->
+                    <div class="flex justify-between items-start flex-wrap gap-4 mb-10 border-b-2 pb-6 border-gray-200">
+                        <h3 class="text-4xl font-extrabold text-gray-900 flex items-center">
+                            <i data-lucide="clipboard-list" class="h-8 w-8 mr-3 text-primary"></i> Consignment ID: <span class="text-accent ml-2 tracking-tight">${shipment.trackingNumber}</span>
+                        </h3>
+                        <span class="px-6 py-2 rounded-full text-lg font-extrabold tracking-wider ${statusClasses} shadow-xl">
+                            ${shipment.status.toUpperCase()}
+                        </span>
+                    </div>
 
-                    const estimatedQuote = baseCost + weightCost + dimCost + distanceFactor;
-                    displayMessage('quote-message', `Your estimated quote is: ₦${estimatedQuote.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 'success');
-                    hideLoading(getQuoteBtn);
-                }, 1500); // Simulate network delay
-            });
+                    <!-- Dynamic Action Blocks -->
+                    ${clearanceActionBlock}
+                    ${recipientActionBlock}
 
-            clearQuoteFormBtn.addEventListener('click', function() {
-                sendParcelForm.reset();
-                quoteMessage.classList.add('hidden');
-            });
-
-
-            // --- Track Your Shipment & Map Logic ---
-            const trackingNumberInput = document.getElementById('tracking-number');
-            const trackButton = document.getElementById('track-button');
-            const trackingMapCanvas = document.getElementById('tracking-map-canvas');
-            const trackingMapCtx = trackingMapCanvas.getContext('2d');
-            const trackingResultsDiv = document.getElementById('tracking-results');
-            const displayTrackingNumber = document.getElementById('display-tracking-number');
-            const shipmentStatus = document.getElementById('shipment-status');
-            const shipmentLocation = document.getElementById('shipment-location');
-            const shipmentEta = document.getElementById('shipment-eta');
-            const milesRemainingDisplay = document.getElementById('miles-remaining');
-            const journeyProgressDisplay = document.getElementById('journey-progress');
-            const nextMajorStopDisplay = document.getElementById('next-major-stop'); 
-            const distanceToNextStopDisplay = document.getElementById('distance-to-next-stop'); 
-
-
-            let mapAnimationId;
-            let currentPackagePosition = { x: 0, y: 0 };
-            let currentRoutePoints = [];
-            let currentWaypointIndex = 0;
-
-            let mapZoomLevel = 1; 
-            let mapPanX = 0;
-            let mapPanY = 0;
-            let targetMapZoomLevel = 1;
-            let targetMapPanX = 0;
-            let targetMapPanY = 0;
-
-            const SMOOTH_FACTOR = 0.08; 
-            const WAKE_POINTS_HISTORY = 10; 
-            let wakeTrail = [];
-
-            // --- Global tracking state ---
-            let currentTrackingNumber = null;
-            let isDelivered = false;
-            let simulatedMapJourneyStartMs = 0; 
-            let totalRouteLengthPixels = 0;
-            let estimatedTotalTravelTimeMs = 0; // Total expected time, including simulated delays if any
-
-            // Fixed realistic ship speed for display purposes (knots)
-            const REALISTIC_SHIP_SPEED_KNOTS = 18; 
-            // Factor to convert simulated map pixels to approximate nautical miles.
-            // This is an arbitrary scaling to make the 'miles remaining' feel right, not a precise geo conversion.
-            const PIXELS_TO_NAUTICAL_MILES_FACTOR = 0.5; 
-
-            let activeRouteData = null; // Stores the route data for the currently tracked shipment
-
-            // --- Geographic Waypoints (Ratio-based coordinates on a 1000x500 virtual map) ---
-            const geoWaypoints = {
-                LAGOS: { x: 0.48, y: 0.65, name: "Lagos, Nigeria" }, 
-                LONDON: { x: 0.45, y: 0.35, name: "London, UK" }, 
-                FRANKFURT: { x: 0.50, y: 0.30, name: "Frankfurt, Germany" }, 
-                NEW_YORK: { x: 0.20, y: 0.35, name: "New York, USA" },
-                TORONTO: { x: 0.25, y: 0.20, name: "Toronto, Canada" },
-                DUBAI: { x: 0.62, y: 0.48, name: "Dubai, UAE" }, 
-                SINGAPORE: { x: 0.80, y: 0.70, name: "Singapore" },
-                SYDNEY: { x: 0.90, y: 0.90, name: "Sydney, Australia" },
-                SHANGHAI: { x: 0.85, y: 0.30, name: "Shanghai, China" },
-                MEXICO_CITY: { x: 0.18, y: 0.55, name: "Mexico City, Mexico" },
-                SANTIAGO: { x: 0.22, y: 0.90, name: "Santiago, Chile" },
-                CAPE_TOWN: { x: 0.45, y: 0.85, name: "Cape Town, South Africa" },
-                TOKYO: { x: 0.90, y: 0.35, name: "Tokyo, Japan" },
-                ROTTERDAM: { x: 0.46, y: 0.28, name: "Rotterdam, NL" }
-            };
-
-            const DAY_IN_MS = 24 * 60 * 60 * 1000;
-
-            const simulatedGlobalRoutes = {
-                'ZR123456780': { // Lagos -> London -> New York -> Toronto (Delivered)
-                    waypoints: [geoWaypoints.LAGOS, geoWaypoints.LONDON, geoWaypoints.NEW_YORK, geoWaypoints.TORONTO],
-                    statusTimeline: [
-                        { segmentIndex: 0, progress: 0.00, status: 'Processing at Origin', location: 'ZenithRoute Warehouse, Lagos' },
-                        { segmentIndex: 0, progress: 0.10, status: 'Departed Lagos, Nigeria', location: 'Atlantic Ocean' },
-                        { segmentIndex: 0, progress: 0.70, status: 'Approaching London, UK', location: 'English Channel' },
-                        { segmentIndex: 1, progress: 0.05, status: 'Departed London, UK', location: 'Atlantic Ocean' },
-                        { segmentIndex: 1, progress: 0.60, status: 'Approaching New York, USA', location: 'North Atlantic' },
-                        { segmentIndex: 2, progress: 0.05, status: 'Departed New York, USA', location: 'Great Lakes' },
-                        { segmentIndex: 2, progress: 0.70, status: 'Approaching Toronto, Canada', location: 'Lake Ontario' },
-                    ],
-                    finalStatus: 'Delivered',
-                    finalLocation: 'Final Destination, Toronto, Canada',
-                    initialDelayMs: 0,
-                    simulatedDelayMs: 0, 
-                    baseRealWorldDays: 18 // Expected real-world journey time
-                },
-                'ZR123456781': { // Lagos -> Frankfurt -> Shanghai -> Sydney (In Transit)
-                    waypoints: [geoWaypoints.LAGOS, geoWaypoints.FRANKFURT, geoWaypoints.SHANGHAI, geoWaypoints.SYDNEY],
-                    statusTimeline: [
-                        { segmentIndex: 0, progress: 0.00, status: 'Processing at Origin', location: 'ZenithRoute Warehouse, Lagos' },
-                        { segmentIndex: 0, progress: 0.10, status: 'Departed Lagos, Nigeria', location: 'Atlantic Ocean' },
-                        { segmentIndex: 0, progress: 0.70, status: 'Approaching Frankfurt, Germany', location: 'North Sea' },
-                        { segmentIndex: 1, progress: 0.05, status: 'Departed Frankfurt, Germany', location: 'Indian Ocean' },
-                        { segmentIndex: 1, progress: 0.60, status: 'Approaching Shanghai, China', location: 'East China Sea' },
-                        { segmentIndex: 2, progress: 0.05, status: 'Departed Shanghai, China', location: 'Pacific Ocean' },
-                        { segmentIndex: 2, progress: 0.70, status: 'Approaching Sydney, Australia', location: 'Tasman Sea' },
-                    ],
-                    finalStatus: 'In Transit',
-                    finalLocation: 'In Transit, Sydney, Australia',
-                    initialDelayMs: 0,
-                    simulatedDelayMs: 0,
-                    baseRealWorldDays: 28 // Expected real-world journey time
-                },
-                'ZR123456782': { // Lagos -> New York (Processing at Origin)
-                    waypoints: [geoWaypoints.LAGOS, geoWaypoints.NEW_YORK],
-                    statusTimeline: [
-                        { segmentIndex: 0, progress: 0.00, status: 'Processing at Origin', location: 'ZenithRoute Warehouse, Lagos' },
-                        { segmentIndex: 0, progress: 0.01, status: 'Awaiting Pickup', location: 'ZenithRoute Warehouse, Lagos' }, 
-                        { segmentIndex: 0, progress: 0.10, status: 'Departed Lagos, Nigeria', location: 'Atlantic Ocean' },
-                        { segmentIndex: 0, progress: 0.70, status: 'Approaching New York, USA', location: 'North Atlantic' },
-                    ],
-                    finalStatus: 'Processing at Origin',
-                    finalLocation: 'ZenithRoute Warehouse, Lagos, Nigeria',
-                    initialDelayMs: 3 * DAY_IN_MS, // 3 days initial processing before moving
-                    simulatedDelayMs: 0,
-                    baseRealWorldDays: 14 // Expected real-world journey time (excluding initial delay, which is added later)
-                },
-                'ZR123456783': { // Lagos -> Dubai -> Sydney (Delay Detected)
-                    waypoints: [geoWaypoints.LAGOS, geoWaypoints.DUBAI, geoWaypoints.SYDNEY],
-                    statusTimeline: [
-                        { segmentIndex: 0, progress: 0.00, status: 'Processing at Origin', location: 'ZenithRoute Warehouse, Lagos' },
-                        { segmentIndex: 0, progress: 0.10, status: 'Departed Lagos, Nigeria', location: 'Atlantic Ocean' },
-                        { segmentIndex: 0, progress: 0.70, status: 'Approaching Dubai, UAE', location: 'Arabian Sea' },
-                        { segmentIndex: 1, progress: 0.05, status: 'Delayed at Customs, Dubai', location: 'Customs Hold, Dubai' }, 
-                        { segmentIndex: 1, progress: 0.10, status: 'Departed Dubai, UAE', location: 'Indian Ocean' }, 
-                        { segmentIndex: 1, progress: 0.70, status: 'Approaching Sydney, Australia', location: 'Southern Ocean' },
-                    ],
-                    finalStatus: 'Delay Detected',
-                    finalLocation: 'Customs Hold, Dubai, UAE',
-                    initialDelayMs: 0,
-                    simulatedDelayMs: 4 * DAY_IN_MS, // 4 days extra delay added at Dubai
-                    baseRealWorldDays: 25 // Expected real-world journey time (excluding mid-route delay)
-                },
-                'ZR123456784': { // Singapore -> Tokyo -> New York (In Transit)
-                    waypoints: [geoWaypoints.SINGAPORE, geoWaypoints.TOKYO, geoWaypoints.NEW_YORK],
-                    statusTimeline: [
-                        { segmentIndex: 0, progress: 0.00, status: 'Processing at Origin', location: 'ZenithRoute Warehouse, Singapore' },
-                        { segmentIndex: 0, progress: 0.10, status: 'Departed Singapore', location: 'South China Sea' },
-                        { segmentIndex: 0, progress: 0.70, status: 'Approaching Tokyo, Japan', location: 'Pacific Ocean' },
-                        { segmentIndex: 1, progress: 0.05, status: 'Departed Tokyo, Japan', location: 'North Pacific' },
-                        { segmentIndex: 1, progress: 0.70, status: 'Approaching New York, USA', location: 'North Atlantic' },
-                    ],
-                    finalStatus: 'In Transit',
-                    finalLocation: 'In Transit, New York, USA',
-                    initialDelayMs: 0,
-                    simulatedDelayMs: 0,
-                    baseRealWorldDays: 20 // Expected real-world journey time
-                },
-                'ZR123456785': { // Sydney -> Cape Town -> Rotterdam (Delivered)
-                    waypoints: [geoWaypoints.SYDNEY, geoWaypoints.CAPE_TOWN, geoWaypoints.ROTTERDAM],
-                    statusTimeline: [
-                        { segmentIndex: 0, progress: 0.00, status: 'Processing at Origin', location: 'ZenithRoute Warehouse, Sydney' },
-                        { segmentIndex: 0, progress: 0.10, status: 'Departed Sydney, Australia', location: 'Tasman Sea' },
-                        { segmentIndex: 0, progress: 0.70, status: 'Approaching Cape Town, South Africa', location: 'Southern Ocean' },
-                        { segmentIndex: 1, progress: 0.05, status: 'Departed Cape Town, South Africa', location: 'Atlantic Ocean' },
-                        { segmentIndex: 1, progress: 0.70, status: 'Approaching Rotterdam, Netherlands', location: 'North Sea' },
-                    ],
-                    finalStatus: 'Delivered',
-                    finalLocation: 'Rotterdam, Netherlands',
-                    initialDelayMs: 0,
-                    simulatedDelayMs: 0,
-                    baseRealWorldDays: 30 // Expected real-world journey time
-                }
-            };
-
-            // Function to calculate Euclidean distance between two points
-            function getPixelDistance(p1, p2) {
-                return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
-            }
-
-            // Function to format milliseconds into Dd Hh Mm string
-            function formatTimeRemaining(ms) {
-                if (ms <= 0) return 'Arrived!';
-                let seconds = Math.floor(ms / 1000);
-                let minutes = Math.floor(seconds / 60);
-                let hours = Math.floor(minutes / 60);
-                let days = Math.floor(hours / 24);
-
-                hours %= 24;
-                minutes %= 60;
-                // seconds %= 60; // Not used for display but good for calculation accuracy
-
-                let parts = [];
-                if (days > 0) parts.push(`${days}d`);
-                if (hours > 0) parts.push(`${hours}h`);
-                if (minutes > 0) parts.push(`${minutes}m`);
-
-                if (parts.length === 0) return 'Arrived!'; // Should not happen with ms > 0
-                return parts.join(' ');
-            }
-
-            // Function to draw a Font Awesome icon on canvas with rotation
-            function drawFontAwesomeIcon(ctx, iconUnicode, x, y, size, color, rotationAngle = 0) {
-                ctx.save();
-                ctx.translate(x, y);
-                ctx.rotate(rotationAngle); 
-                ctx.font = `${size}px "Font Awesome 6 Free"`; 
-                ctx.fontWeight = '900'; 
-                ctx.fillStyle = color;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(String.fromCharCode(iconUnicode), 0, 0); 
-                ctx.restore();
-            }
-
-
-            // Function to draw the world map outline with more detail and depth
-            function drawWorldMap() {
-                const ctx = trackingMapCtx;
-                const canvas = trackingMapCanvas;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                ctx.save(); 
-
-                // Apply smooth zoom and pan
-                ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.scale(mapZoomLevel, mapZoomLevel);
-                ctx.translate(-canvas.width / 2 + mapPanX, -canvas.height / 2 + mapPanY);
-
-                // Ocean background (subtle gradient with animating waves)
-                const oceanGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                oceanGradient.addColorStop(0, '#A0D0E0'); // Mid blue
-                oceanGradient.addColorStop(0.5, '#7CB9E8'); // Brighter blue
-                oceanGradient.addColorStop(1, '#5D8AA8'); // Deeper blue
-                ctx.fillStyle = oceanGradient;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Simulate subtle waves (very light overlay)
-                const waveScale = 0.005;
-                const waveSpeed = 0.00005; 
-                for (let i = 0; i < canvas.width; i += 20) {
-                    for (let j = 0; j < canvas.height; j += 20) {
-                        const phase = (i + j) * waveScale + Date.now() * waveSpeed;
-                        ctx.fillStyle = `rgba(255, 255, 255, ${0.05 + Math.sin(phase) * 0.03})`;
-                        ctx.fillRect(i, j, 5, 5); 
-                    }
-                }
-
-                // Landmasses
-                ctx.fillStyle = '#6A737C'; /* Darker gray for land */
-                ctx.strokeStyle = '#5A6065'; /* Border for land */
-                ctx.lineWidth = 0.8 / mapZoomLevel; 
-
-                // Add subtle shadow to landmasses for depth
-                ctx.shadowColor = 'rgba(0,0,0,0.4)';
-                ctx.shadowBlur = 10 / mapZoomLevel;
-                ctx.shadowOffsetX = 3 / mapZoomLevel;
-                ctx.shadowOffsetY = 3 / mapZoomLevel;
-
-                // Function to draw scaled shapes (coordinates are now ratios 0-1)
-                const drawScaledShape = (coords) => {
-                    const path = new Path2D();
-                    coords.forEach((point, i) => {
-                        const x = point[0] * canvas.width; 
-                        const y = point[1] * canvas.height;
-                        if (i === 0) {
-                            path.moveTo(x, y);
-                        } else {
-                            path.lineTo(x, y);
-                        }
-                    });
-                    path.closePath();
-                    ctx.fill(path);
-                    ctx.stroke(path);
-                };
-
-                // Continent paths (more intricate for better realism) - These are simplified examples, a real map uses much more detail.
-                // North America
-                drawScaledShape([[0.05,0.25],[0.08,0.1],[0.15,0.05],[0.25,0.08],[0.30,0.15],[0.32,0.30],[0.28,0.40],[0.25,0.55],[0.18,0.60],[0.12,0.50],[0.08,0.40],[0.05,0.35]]);
-                // South America
-                drawScaledShape([[0.15,0.65],[0.18,0.58],[0.25,0.55],[0.30,0.60],[0.32,0.75],[0.28,0.85],[0.25,0.90],[0.20,0.95],[0.15,0.88],[0.12,0.78]]);
-                // Europe
-                drawScaledShape([[0.38,0.30],[0.42,0.20],[0.48,0.15],[0.55,0.18],[0.60,0.25],[0.55,0.35],[0.48,0.38],[0.42,0.35]]);
-                // Africa
-                drawScaledShape([[0.45,0.45],[0.48,0.38],[0.55,0.40],[0.60,0.55],[0.58,0.70],[0.52,0.80],[0.47,0.75],[0.42,0.60]]);
-                // Asia
-                drawScaledShape([[0.60,0.20],[0.70,0.10],[0.85,0.15],[0.95,0.25],[0.90,0.45],[0.80,0.55],[0.70,0.50],[0.65,0.40]]);
-                // Australia
-                drawScaledShape([[0.80,0.80],[0.85,0.75],[0.90,0.80],[0.88,0.90],[0.82,0.95]]);
-                
-                // Antartica (bottom white strip)
-                ctx.fillStyle = '#E0E0E0'; 
-                ctx.fillRect(0, canvas.height * 0.98, canvas.width, canvas.height * 0.02);
-                
-                // Reset shadow after drawing landmasses
-                ctx.shadowColor = 'transparent';
-                ctx.shadowBlur = 0;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
-
-                // Add grid lines (more subtle)
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; 
-                ctx.lineWidth = 1 / mapZoomLevel; 
-                ctx.setLineDash([8 / mapZoomLevel, 8 / mapZoomLevel]); 
-                
-                for (let i = 1; i < 5; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(canvas.width / 5 * i, 0);
-                    ctx.lineTo(canvas.width / 5 * i, canvas.height);
-                    ctx.stroke();
-                }
-                for (let i = 1; i < 3; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, canvas.height / 3 * i);
-                    ctx.lineTo(canvas.width, canvas.height / 3 * i);
-                    ctx.stroke();
-                }
-                ctx.setLineDash([]); 
-
-                // Draw static city markers and labels (only when zoomed out enough)
-                if (mapZoomLevel < 1.5) { 
-                    ctx.fillStyle = '#333';
-                    ctx.font = `bold ${10 / mapZoomLevel}px Inter`;
-                    ctx.textAlign = 'center';
-                    for (const key in geoWaypoints) {
-                        const wp = geoWaypoints[key];
-                        const pxX = wp.x * canvas.width;
-                        const pxY = wp.y * canvas.height;
-                        ctx.beginPath();
-                        ctx.arc(pxX, pxY, 3 / mapZoomLevel, 0, 2 * Math.PI); 
-                        ctx.fill();
-                        ctx.fillText(wp.name.split(',')[0], pxX, pxY - 10 / mapZoomLevel); 
-                    }
-                }
-
-                ctx.restore(); 
-            }
-
-            // Function to generate a simulated route (using pixel coordinates from geoWaypoints)
-            function generateSimulatedRoute(routeWaypoints) {
-                const routeInPixels = routeWaypoints.map(wp => ({
-                    x: wp.x * trackingMapCanvas.width,
-                    y: wp.y * trackingMapCanvas.height,
-                    name: wp.name 
-                }));
-                return routeInPixels;
-            }
-
-            // Get point on a segment
-            function getPointOnSegment(p1, p2, progress) {
-                return {
-                    x: p1.x + (p2.x - p1.x) * progress,
-                    y: p1.y + (p2.y - p1.y) * progress
-                };
-            }
-
-            function animateMapTracking() { 
-                // Smoothly interpolate zoom and pan
-                mapZoomLevel += (targetMapZoomLevel - mapZoomLevel) * SMOOTH_FACTOR;
-                mapPanX += (targetMapPanX - mapPanX) * SMOOTH_FACTOR;
-                mapPanY += (targetMapPanY - mapPanY) * SMOOTH_FACTOR;
-
-                drawWorldMap(); 
-
-                const ctx = trackingMapCtx;
-                const canvas = trackingMapCanvas;
-
-                ctx.save();
-                ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.scale(mapZoomLevel, mapZoomLevel);
-                ctx.translate(-canvas.width / 2 + mapPanX, -canvas.height / 2 + mapPanY);
-
-                // Draw route line
-                if (currentRoutePoints.length > 1) {
-                    ctx.beginPath();
-                    ctx.moveTo(currentRoutePoints[0].x, currentRoutePoints[0].y);
-                    for (let i = 1; i < currentRoutePoints.length; i++) {
-                        ctx.lineTo(currentRoutePoints[i].x, currentRoutePoints[i].y);
-                    }
-                    ctx.strokeStyle = '#4A90E2'; 
-                    ctx.lineWidth = 3 / mapZoomLevel; 
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-                    ctx.stroke();
-                }
-
-                // Draw origin and destination markers
-                if (currentRoutePoints.length > 0) {
-                    drawFontAwesomeIcon(ctx, 0xf3c5, currentRoutePoints[0].x, currentRoutePoints[0].y - (10 / mapZoomLevel), 25 / mapZoomLevel, '#1A73E8'); 
-                    ctx.font = `bold ${12 / mapZoomLevel}px Inter`;
-                    ctx.fillText('Origin', currentRoutePoints[0].x, currentRoutePoints[0].y + (10 / mapZoomLevel));
-                    
-                    const dest = currentRoutePoints[currentRoutePoints.length - 1];
-                    drawFontAwesomeIcon(ctx, 0xf3c5, dest.x, dest.y - (10 / mapZoomLevel), 25 / mapZoomLevel, '#E83F6F'); 
-                    ctx.font = `bold ${12 / mapZoomLevel}px Inter`;
-                    ctx.fillText('Destination', dest.x, dest.y + (10 / mapZoomLevel));
-                }
-
-                // Animate package along the route
-                if (currentRoutePoints.length > 0 && !isDelivered) { 
-                    const currentAbsoluteTime = Date.now(); 
-                    let elapsedTimeSinceRouteStart = currentAbsoluteTime - simulatedMapJourneyStartMs;
-                    
-                    // Account for initial processing delay
-                    let effectiveElapsedTime = elapsedTimeSinceRouteStart;
-                    if (activeRouteData.initialDelayMs && activeRouteData.initialDelayMs > 0) {
-                        effectiveElapsedTime = Math.max(0, elapsedTimeSinceRouteStart - activeRouteData.initialDelayMs);
-                    }
-
-                    // Account for simulated mid-route delay by adding it to effective time if passed the point
-                    if (activeRouteData.simulatedDelayMs && activeRouteData.simulatedDelayMs > 0) {
-                         const timeToDelayPoint = estimatedTotalTravelTimeMs * 0.5; // Assume delay occurs half way
-                         if (elapsedTimeSinceRouteStart > timeToDelayPoint) {
-                             effectiveElapsedTime = Math.max(0, effectiveElapsedTime - activeRouteData.simulatedDelayMs);
-                         }
-                    }
-
-                    // Calculate journey completion based on real-world elapsed time vs total estimated time
-                    const journeyCompletionRatio = effectiveElapsedTime / estimatedTotalTravelTimeMs;
-                    let pixelsTraveledSoFar = journeyCompletionRatio * totalRouteLengthPixels;
-
-                    // Cap pixels traveled at total length
-                    if (pixelsTraveledSoFar > totalRouteLengthPixels) {
-                        pixelsTraveledSoFar = totalRouteLengthPixels;
-                    }
-
-                    let currentSegmentStartPixels = 0;
-                    currentWaypointIndex = 0;
-                    for (let i = 0; i < currentRoutePoints.length - 1; i++) {
-                        const segmentLength = getPixelDistance(currentRoutePoints[i], currentRoutePoints[i+1]);
-                        if (pixelsTraveledSoFar < currentSegmentStartPixels + segmentLength) {
-                            currentWaypointIndex = i;
-                            break;
-                        }
-                        currentSegmentStartPixels += segmentLength;
-                        currentWaypointIndex = i + 1; 
-                    }
-
-                    // Handle ship reaching the very end of the route
-                    if (pixelsTraveledSoFar >= totalRouteLengthPixels) {
-                        isDelivered = true;
-                        currentWaypointIndex = currentRoutePoints.length - 1;
-                        currentPackagePosition = currentRoutePoints[currentWaypointIndex];
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Map View (2/3 width on large screens) -->
+                        <div class="lg:col-span-2">
+                            <h4 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                                <i data-lucide="map" class="h-6 w-6 mr-2 text-primary"></i> Real-Time Geospatial Tracking
+                            </h4>
+                            ${renderMap(currentGeo)}
+                            <div class="p-4 bg-secondary rounded-xl shadow-inner text-sm text-gray-700 mt-4 border border-accent/30">
+                                <p class="font-bold">Protocol Advisory:</p>
+                                <p>Map location updates automatically every 5 minutes from the last reported waypoint. Data provided in UTC/Zulu time.</p>
+                            </div>
+                        </div>
                         
-                        // Clear persistence for delivered items
-                        localStorage.removeItem('zenithRoute_simulatedStartTime_' + currentTrackingNumber);
-                        localStorage.removeItem('zenithRoute_lastTrackedNumber'); 
-
-                        // Set final status
-                        shipmentStatus.textContent = activeRouteData.finalStatus;
-                        shipmentLocation.textContent = activeRouteData.finalLocation;
-                        shipmentEta.textContent = 'Delivered!';
-                        milesRemainingDisplay.textContent = '0 nm';
-                        journeyProgressDisplay.textContent = '100.0%';
-                        nextMajorStopDisplay.textContent = 'N/A';
-                        distanceToNextStopDisplay.textContent = 'N/A';
-                        shipmentStatus.style.color = '#10B981';
-                        
-                        cancelAnimationFrame(mapAnimationId); 
-                        mapAnimationId = null;
-                        ctx.restore();
-                        return; 
-                    }
-
-                    const p1 = currentRoutePoints[currentWaypointIndex];
-                    const p2 = currentRoutePoints[Math.min(currentWaypointIndex + 1, currentRoutePoints.length -1)]; 
-
-                    const segmentLength = getPixelDistance(p1, p2);
-                    const pixelsIntoCurrentSegment = segmentLength > 0 ? (pixelsTraveledSoFar - currentSegmentStartPixels) : 0;
-                    const segmentProgress = segmentLength > 0 ? (pixelsIntoCurrentSegment / segmentLength) : 0;
-
-                    currentPackagePosition = getPointOnSegment(p1, p2, segmentProgress);
-
-                    // Calculate ship rotation angle
-                    const dx = p2.x - p1.x;
-                    const dy = p2.y - p1.y;
-                    const shipAngle = Math.atan2(dy, dx);
-
-                    // Ship blinking effect
-                    const blinkAlpha = (Date.now() % 1000 < 500) ? 1 : 0.6; 
-                    ctx.globalAlpha = blinkAlpha;
-                    drawFontAwesomeIcon(ctx, 0xf21a, currentPackagePosition.x, currentPackagePosition.y, 30 / mapZoomLevel, '#DC143C', shipAngle);
-                    ctx.globalAlpha = 1; 
-
-                    // Store current position for wake trail
-                    wakeTrail.push({ x: currentPackagePosition.x, y: currentPackagePosition.y });
-                    if (wakeTrail.length > WAKE_POINTS_HISTORY) {
-                        wakeTrail.shift(); 
-                    }
-
-                    // Draw wake trail
-                    if (wakeTrail.length > 1) {
-                        for (let i = 0; i < wakeTrail.length - 1; i++) {
-                            const trailPoint = wakeTrail[i];
-                            const nextTrailPoint = wakeTrail[i+1];
-                            const alpha = (i / WAKE_POINTS_HISTORY) * 0.8; 
-                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-                            ctx.lineWidth = 2 / mapZoomLevel;
-                            ctx.beginPath();
-                            ctx.moveTo(trailPoint.x, trailPoint.y);
-                            ctx.lineTo(nextTrailPoint.x, nextTrailPoint.y);
-                            ctx.stroke();
-                        }
-                    }
-
-                    // Add glow effect for the package
-                    ctx.beginPath();
-                    ctx.arc(currentPackagePosition.x, currentPackagePosition.y, 12 / mapZoomLevel, 0, 2 * Math.PI); 
-                    ctx.fillStyle = '#DC143C'; 
-                    ctx.shadowColor = '#DC143C'; 
-                    ctx.shadowBlur = 20 / mapZoomLevel; 
-                    ctx.globalAlpha = 0.6; 
-                    ctx.fill();
-                    ctx.globalAlpha = 1; 
-                    ctx.shadowBlur = 0; 
-                    
-                    // Dynamic Status and Location updates
-                    let currentDisplayStatus = 'In Transit';
-                    let currentDisplayLocation = 'At Sea';
-
-                    // Find the most appropriate status from the timeline
-                    let closestStatusEntry = null;
-                    let maxProgressMatchTime = -1; 
-
-                    activeRouteData.statusTimeline.forEach(entry => {
-                        // Calculate time equivalent of this entry's progress based on total estimated time
-                        let entryPixelsAtProgress = 0;
-                        for(let i=0; i < entry.segmentIndex; i++) {
-                            entryPixelsAtProgress += getPixelDistance(currentRoutePoints[i], currentRoutePoints[i+1]);
-                        }
-                        const entrySegmentLength = getPixelDistance(currentRoutePoints[entry.segmentIndex], currentRoutePoints[entry.segmentIndex+1] || currentRoutePoints[entry.segmentIndex]); 
-                        entryPixelsAtProgress += (entrySegmentLength * entry.progress);
-                        
-                        const entryTimeEquivalent = (entryPixelsAtProgress / totalRouteLengthPixels) * estimatedTotalTravelTimeMs;
-
-                        if (effectiveElapsedTime >= entryTimeEquivalent && entryTimeEquivalent > maxProgressMatchTime) {
-                            closestStatusEntry = entry;
-                            maxProgressMatchTime = entryTimeEquivalent;
-                        }
-                    });
-
-                    if (closestStatusEntry) {
-                        currentDisplayStatus = closestStatusEntry.status;
-                        currentDisplayLocation = closestStatusEntry.location;
-                    }
-
-                    // Determine next major stop and distance to it
-                    let nextMajorStop = 'N/A';
-                    let distanceToNextStop = 'N/A';
-                    if (currentWaypointIndex < currentRoutePoints.length - 1) {
-                        const nextWaypoint = currentRoutePoints[currentWaypointIndex + 1];
-                        nextMajorStop = `${nextWaypoint.name}`;
-                        const pixelsToNextWaypoint = getPixelDistance(currentPackagePosition, nextWaypoint);
-                        distanceToNextStop = `${(pixelsToNextWaypoint * PIXELS_TO_NAUTICAL_MILES_FACTOR).toFixed(0)} nm`;
-                    } else {
-                        nextMajorStop = activeRouteData.waypoints[activeRouteData.waypoints.length - 1].name; 
-                        distanceToNextStop = 'Very Close!';
-                    }
-                    
-                    // Display current speed (realistic, not animation speed)
-                    const currentSpeedKnots = REALISTIC_SHIP_SPEED_KNOTS; 
-                    
-                    // Update UI elements
-                    shipmentStatus.textContent = currentDisplayStatus;
-                    shipmentLocation.textContent = `${currentDisplayLocation} (Speed: ${currentSpeedKnots} knots)`; 
-                    milesRemainingDisplay.textContent = `${((totalRouteLengthPixels - pixelsTraveledSoFar) * PIXELS_TO_NAUTICAL_MILES_FACTOR).toFixed(0)} nm`; 
-                    journeyProgressDisplay.textContent = `${(journeyCompletionRatio * 100).toFixed(1)}%`;
-                    nextMajorStopDisplay.textContent = nextMajorStop; 
-                    distanceToNextStopDisplay.textContent = distanceToNextStop; 
-                    
-                    // Display ETA on map and in results
-                    const remainingTravelTimeMs = Math.max(0, estimatedTotalTravelTimeMs - effectiveElapsedTime);
-                    const etaText = formatTimeRemaining(remainingTravelTimeMs);
-                    ctx.fillText(`ETA: ${etaText}`, currentPackagePosition.x + 25 / mapZoomLevel, currentPackagePosition.y + 25 / mapZoomLevel);
-                    shipmentEta.textContent = etaText;
-
-                } else if (isDelivered) {
-                    // If delivered, keep final status and data static
-                    milesRemainingDisplay.textContent = '0 nm';
-                    journeyProgressDisplay.textContent = '100.0%';
-                    shipmentEta.textContent = 'Delivered!';
-                    nextMajorStopDisplay.textContent = 'N/A';
-                    distanceToNextStopDisplay.textContent = 'N/A';
-                    shipmentStatus.style.color = '#10B981';
-                    // Draw ship at final destination (without blinking)
-                    ctx.globalAlpha = 1; 
-                    drawFontAwesomeIcon(ctx, 0xf21a, currentRoutePoints[currentRoutePoints.length -1].x, currentRoutePoints[currentRoutePoints.length -1].y, 30 / mapZoomLevel, '#DC143C', 0); 
-                    ctx.beginPath();
-                    ctx.arc(currentRoutePoints[currentRoutePoints.length -1].x, currentRoutePoints[currentRoutePoints.length -1].y, 12 / mapZoomLevel, 0, 2 * Math.PI); 
-                    ctx.fillStyle = '#DC143C'; 
-                    ctx.shadowColor = '#DC143C'; 
-                    ctx.shadowBlur = 20 / mapZoomLevel; 
-                    ctx.globalAlpha = 0.6; 
-                    ctx.fill();
-                    ctx.globalAlpha = 1; 
-                    ctx.shadowBlur = 0; 
-                    ctx.fillStyle = '#333';
-                    ctx.font = `bold ${14 / mapZoomLevel}px Inter`;
-                    ctx.textAlign = 'left';
-                    ctx.fillText(`Final Destination`, currentRoutePoints[currentRoutePoints.length -1].x + 25 / mapZoomLevel, currentRoutePoints[currentRoutePoints.length -1].y + 5 / mapZoomLevel);
-                    
-                } else { // This state is usually when no tracking number is entered or invalid
-                    // Clear tracking results if no active animation/delivery
-                    milesRemainingDisplay.textContent = 'N/A';
-                    journeyProgressDisplay.textContent = 'N/A';
-                    shipmentEta.textContent = 'N/A';
-                    nextMajorStopDisplay.textContent = 'N/A';
-                    distanceToNextStopDisplay.textContent = 'N/A';
-                }
-
-                if (mapAnimationId) { 
-                    mapAnimationId = requestAnimationFrame(animateMapTracking);
-                }
-                ctx.restore(); 
-            }
-
-            // Function to handle canvas resizing gracefully
-            let resizeTimeout;
-            const resizeObserver = new ResizeObserver(entries => {
-                for (let entry of entries) {
-                    if (entry.target === trackingMapCanvas) {
-                        clearTimeout(resizeTimeout);
-                        resizeTimeout = setTimeout(() => {
-                            const newWidth = entry.contentRect.width;
-                            const newHeight = newWidth * (1/2); 
+                        <!-- Sender/Receiver and Core Metrics (1/3 width on large screens) -->
+                        <div class="lg:col-span-1 space-y-6">
+                            <h4 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                                <i data-lucide="list-ordered" class="h-6 w-6 mr-2 text-primary"></i> Consignment Dossier
+                            </h4>
                             
-                            if (trackingMapCanvas.width !== newWidth || trackingMapCanvas.height !== newHeight) {
-                                trackingMapCanvas.width = newWidth;
-                                trackingMapCanvas.height = newHeight; 
-                                drawWorldMap(); 
-                                // Re-initialize and restart animation based on new size if active
-                                if (mapAnimationId && currentTrackingNumber) {
-                                    cancelAnimationFrame(mapAnimationId);
-                                    trackButton.click(); 
-                                }
-                            }
-                        }, 100); 
-                    }
-                }
-            });
+                            <!-- Sender/Receiver Block -->
+                            <div class="p-5 bg-primary/90 rounded-2xl shadow-xl text-white">
+                                <p class="text-xs font-semibold uppercase text-accent mb-2">Transaction Parties</p>
+                                <p class="text-lg font-bold flex items-center"><i data-lucide="arrow-up-right" class="h-4 w-4 mr-2 text-accent"></i> Shipper: ${shipment.senderName}</p>
+                                <p class="text-lg font-bold flex items-center mt-1"><i data-lucide="arrow-down-left" class="h-4 w-4 mr-2 text-accent"></i> Consignee: ${shipment.receiverName}</p>
+                            </div>
 
-            // Observe the canvas for size changes
-            resizeObserver.observe(trackingMapCanvas);
+                            <!-- Core Metrics List -->
+                            <div class="p-5 bg-white rounded-2xl shadow-xl border border-gray-200 space-y-3">
+                                <div class="flex justify-between items-center pb-2 border-b border-dashed">
+                                    <p class="text-sm font-medium text-gray-600 flex items-center"><i data-lucide="calendar" class="h-5 w-5 mr-2 text-primary"></i> Est. Delivery Date</p>
+                                    <p class="text-lg font-extrabold text-primary">${shipment.estimatedDelivery}</p>
+                                </div>
+                                <div class="flex justify-between items-center pb-2 border-b border-dashed">
+                                    <p class="text-sm font-medium text-gray-600 flex items-center"><i data-lucide="box" class="h-5 w-5 mr-2 text-primary"></i> Dead Weight</p>
+                                    <p class="text-lg font-extrabold text-primary">${shipment.weight}</p>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-sm font-medium text-gray-600 flex items-center"><i data-lucide="scale" class="h-5 w-5 mr-2 text-primary"></i> Volumetric Weight</p>
+                                    <p class="text-lg font-extrabold text-primary">${shipment.volumetricWeight}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            // Initial canvas size setup (fallback for browsers without ResizeObserver or initial load)
-            const setInitialCanvasSize = () => {
-                trackingMapCanvas.width = trackingMapCanvas.offsetWidth;
-                trackingMapCanvas.height = trackingMapCanvas.offsetWidth * (1/2); 
-                drawWorldMap(); 
-            };
-            setInitialCanvasSize();
+                    <!-- Tracking Timeline -->
+                    <h4 class="text-2xl font-bold text-gray-800 mt-10 mb-6 border-t-2 pt-6 flex items-center">
+                        <i data-lucide="git-branch" class="h-6 w-6 mr-3 text-primary"></i> Full Transit History Log
+                    </h4>
+                    <div class="relative pl-4">
+                        <!-- Vertical Timeline Line -->
+                        <div class="timeline-line"></div>
+                        <ul class="space-y-4">
+                            ${historyHtml}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            return resultHtml;
+        }
 
+        /**
+         * Displays a generic message (initial state or error).
+         */
+        function displayMessage(title, message, iconName = 'search') {
+            resultsContainer.innerHTML = `
+                <div class="text-center p-20 bg-white rounded-3xl shadow-xl border-2 border-dashed border-accent/50 transform scale-[0.98] opacity-90 transition duration-500">
+                    <i data-lucide="${iconName}" class="mx-auto h-24 w-24 text-accent mb-4 animate-pulse-slow"></i>
+                    <h3 class="mt-4 text-4xl font-bold text-gray-900">${title}</h3>
+                    <p class="mt-2 text-xl text-gray-500">${message}</p>
+                </div>
+            `;
+            lucide.createIcons();
+        }
 
-            trackButton.addEventListener('click', function() {
-                const trackingNum = trackingNumberInput.value.trim();
-                currentTrackingNumber = trackingNum; 
+        /**
+         * Main function to handle the tracking submission.
+         */
+        function trackShipment() {
+            const trackingInput = document.getElementById('trackingInput');
+            const trackingNumber = trackingInput.value.trim().toUpperCase();
 
-                if (!trackingNum) {
-                    displayMessage('tracking-results', 'Please enter a tracking number.', 'error');
-                    trackingResultsDiv.classList.remove('hidden');
-                    if (mapAnimationId) cancelAnimationFrame(mapAnimationId);
-                    mapAnimationId = null;
-                    localStorage.removeItem('zenithRoute_lastTrackedNumber'); // Clear last tracked if empty
-                    localStorage.removeItem('zenithRoute_simulatedStartTime_' + currentTrackingNumber);
-                    return;
-                }
+            resultsContainer.innerHTML = ''; // Clear previous results
 
-                showLoading(trackButton, 'Track', 'fas fa-magnifying-glass');
-                trackingResultsDiv.classList.add('hidden'); 
-
-                // --- Initial Global View ---
-                targetMapZoomLevel = 1; 
-                targetMapPanX = 0; 
-                targetMapPanY = 0;
-                mapZoomLevel = 1; 
-                mapPanX = 0;
-                mapPanY = 0;
-                if (mapAnimationId) {
-                    cancelAnimationFrame(mapAnimationId);
-                    mapAnimationId = null; 
-                }
-                drawWorldMap(); 
-                wakeTrail = []; 
-                isDelivered = false; 
-
-                setTimeout(() => {
-                    displayTrackingNumber.textContent = trackingNum;
-                    trackingResultsDiv.classList.remove('hidden');
-
-                    let routeData = simulatedGlobalRoutes[trackingNum];
-
-                    if (routeData) {
-                        activeRouteData = routeData; 
-                        currentRoutePoints = generateSimulatedRoute(routeData.waypoints);
-                        
-                        totalRouteLengthPixels = 0;
-                        for(let i = 0; i < currentRoutePoints.length - 1; i++) {
-                            totalRouteLengthPixels += getPixelDistance(currentRoutePoints[i], currentRoutePoints[i+1]);
-                        }
-                        
-                        // Calculate total estimated time based on real-world days
-                        estimatedTotalTravelTimeMs = routeData.baseRealWorldDays * DAY_IN_MS;
-                        if (routeData.initialDelayMs) {
-                            estimatedTotalTravelTimeMs += routeData.initialDelayMs;
-                        }
-                        if (routeData.simulatedDelayMs) {
-                            estimatedTotalTravelTimeMs += routeData.simulatedDelayMs;
-                        }
-
-                        // Check for persisted start time
-                        const storedStartTime = localStorage.getItem('zenithRoute_simulatedStartTime_' + trackingNum);
-                        
-                        if (storedStartTime) {
-                            simulatedMapJourneyStartMs = parseInt(storedStartTime);
-                            const now = Date.now();
-                            const elapsed = now - simulatedMapJourneyStartMs;
-
-                            if (elapsed >= estimatedTotalTravelTimeMs) {
-                                isDelivered = true;
-                                shipmentStatus.textContent = routeData.finalStatus;
-                                shipmentLocation.textContent = routeData.finalLocation;
-                                shipmentEta.textContent = 'Delivered!';
-                                milesRemainingDisplay.textContent = '0 nm';
-                                journeyProgressDisplay.textContent = '100.0%';
-                                nextMajorStopDisplay.textContent = 'N/A';
-                                distanceToNextStopDisplay.textContent = 'N/A';
-                                shipmentStatus.style.color = '#10B981';
-                                localStorage.removeItem('zenithRoute_simulatedStartTime_' + trackingNum);
-                                localStorage.removeItem('zenithRoute_lastTrackedNumber'); 
-                            } else {
-                                shipmentStatus.textContent = 'Calculating...';
-                                shipmentLocation.textContent = 'Calculating...';
-                                shipmentEta.textContent = 'Calculating...';
-                                milesRemainingDisplay.textContent = 'Calculating...';
-                                journeyProgressDisplay.textContent = 'Calculating...';
-                                nextMajorStopDisplay.textContent = 'Calculating...';
-                                distanceToNextStopDisplay.textContent = 'Calculating...';
-                                mapAnimationId = requestAnimationFrame(animateMapTracking);
-                            }
-                        } else {
-                            simulatedMapJourneyStartMs = Date.now();
-                            localStorage.setItem('zenithRoute_simulatedStartTime_' + trackingNum, simulatedMapJourneyStartMs);
-                            localStorage.setItem('zenithRoute_lastTrackedNumber', trackingNum);
-
-                            let initialStatus = routeData.statusTimeline[0]?.status || 'In Transit';
-                            let initialLocation = routeData.statusTimeline[0]?.location || 'Origin';
-
-                            shipmentStatus.textContent = initialStatus;
-                            shipmentLocation.textContent = initialLocation;
-                            shipmentEta.textContent = 'Calculating...'; 
-                            milesRemainingDisplay.textContent = 'Calculating...';
-                            journeyProgressDisplay.textContent = 'Calculating...';
-                            nextMajorStopDisplay.textContent = 'Calculating...';
-                            distanceToNextStopDisplay.textContent = 'Calculating...';
-
-                            mapAnimationId = requestAnimationFrame(animateMapTracking);
-                        }
-                        
-                    } else {
-                        shipmentStatus.textContent = 'Tracking number not found';
-                        shipmentLocation.textContent = 'N/A';
-                        shipmentEta.textContent = 'Please check the number and try again.';
-                        currentRoutePoints = []; 
-                        targetMapZoomLevel = 1; 
-                        targetMapPanX = 0;
-                        targetMapPanY = 0;
-                        drawWorldMap(); 
-                        milesRemainingDisplay.textContent = 'N/A';
-                        journeyProgressDisplay.textContent = 'N/A';
-                        nextMajorStopDisplay.textContent = 'N/A';
-                        distanceToNextStopDisplay.textContent = 'N/A';
-                        if (mapAnimationId) cancelAnimationFrame(mapAnimationId);
-                        mapAnimationId = null;
-                        localStorage.removeItem('zenithRoute_lastTrackedNumber'); 
-                        localStorage.removeItem('zenithRoute_simulatedStartTime_' + trackingNum);
-                    }
-
-                    // Set status color
-                    const currentDisplayedStatus = shipmentStatus.textContent;
-                    if (currentDisplayedStatus.includes('Delivered')) {
-                        shipmentStatus.style.color = '#10B981'; 
-                    } else if (currentDisplayedStatus.includes('Transit') || currentDisplayedStatus.includes('Processing') || currentDisplayedStatus.includes('Delivery') || currentDisplayedStatus.includes('Awaiting')) {
-                        shipmentStatus.style.color = '#F59E0B'; 
-                    } else if (currentDisplayedStatus.includes('Delay') || currentDisplayedStatus.includes('not found')) {
-                        shipmentStatus.style.color = '#EF4444'; 
-                    } else {
-                        shipmentStatus.style.color = '#3B82F6'; 
-                    }
-
-                    hideLoading(trackButton);
-                }, 1500); 
-            });
-
-            // --- Contact Form Logic ---
-            const contactForm = document.getElementById('contact-form');
-            const sendMessageBtn = document.getElementById('send-message-btn');
-            const contactStatusMessage = document.getElementById('contact-status-message');
-            const contactNameInput = document.getElementById('contact-name');
-            const contactEmailInput = document.getElementById('contact-email');
-            const contactMessageInput = document.getElementById('contact-message');
-
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                showLoading(sendMessageBtn, 'Send Message', 'fas fa-paper-plane');
-
-                const name = contactNameInput.value.trim();
-                const email = contactEmailInput.value.trim();
-                const message = contactMessageInput.value.trim();
-
-                // Simple validation
-                if (!name || !email || !message) {
-                    displayMessage('contact-status-message', 'Please fill in all fields.', 'error');
-                    hideLoading(sendMessageBtn);
-                    return;
-                }
-                if (!/\S+@\S+\.\S+/.test(email)) {
-                    displayMessage('contact-status-message', 'Please enter a valid email address.', 'error');
-                    hideLoading(sendMessageBtn);
-                    return;
-                }
-
-                // Simulate sending message
-                setTimeout(() => {
-                    const success = Math.random() < 0.9; 
-                    if (success) {
-                        displayMessage('contact-status-message', 'Your message has been sent successfully! We will get back to you shortly.', 'success');
-                        contactForm.reset(); 
-                    } else {
-                        displayMessage('contact-status-message', 'Failed to send message. Please try again later.', 'error');
-                    }
-                    hideLoading(sendMessageBtn);
-                }, 1500); 
-            });
-
-            // Auto-load last tracked number on page load
-            const lastTrackedNumberOnLoad = localStorage.getItem('zenithRoute_lastTrackedNumber');
-            if (lastTrackedNumberOnLoad) {
-                trackingNumberInput.value = lastTrackedNumberOnLoad;
-                // Defer click to ensure all other DOMContentLoaded scripts have run
-                setTimeout(() => {
-                    trackButton.click(); 
-                }, 100); 
+            if (!trackingNumber) {
+                displayMessage(
+                    "Input Error",
+                    "Please provide a valid Consignment ID to commence tracking.",
+                    'alert-triangle'
+                );
+                return;
             }
+
+            // Simulate API call delay with professional loading message
+            displayMessage(
+                "Establishing Connection...", 
+                "Retrieving live data from the global logistics matrix. Please wait for real-time dossier upload.", 
+                'loader-circle'
+            );
+
+            setTimeout(() => {
+                const shipment = MOCK_SHIPMENTS.find(s => s.trackingNumber === trackingNumber);
+
+                if (shipment) {
+                    resultsContainer.innerHTML = renderShipmentResult(shipment);
+                    lucide.createIcons(); 
+                } else {
+                    displayMessage(
+                        "Consignment ID Not Found",
+                        `The identifier "${trackingNumber}" does not correspond to any active consignment record in our system.`,
+                        'alert-circle'
+                    );
+                }
+            }, 2000); // 2 second delay for a "professional" load
+        }
+
+        // Add event listener for 'Enter' key press on the input field and initial icon rendering
+        document.addEventListener('DOMContentLoaded', () => {
+            const trackingInput = document.getElementById('trackingInput');
+            trackingInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    trackShipment();
+                }
+            });
+            lucide.createIcons();
         });
+
+        // Add CSS keyframes to the document head
+        const style = document.createElement('style');
+        style.textContent += `
+            @keyframes pulse-slow {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.6; }
+            }
+            .animate-pulse-slow {
+                animation: pulse-slow 5s infinite;
+            }
+            @keyframes spin-slow {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            .animate-spin-slow {
+                animation: spin-slow 20s linear infinite;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
